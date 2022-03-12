@@ -10,4 +10,7 @@ public class HorseMapper {
     public HorseDto entityToDto(Horse horse) {
         return new HorseDto(horse.getId(), horse.getName());
     }
+    public Horse dtoToEntity(HorseDto horseDto){
+        return new Horse(horseDto.id(),horseDto.name());
+    }
 }

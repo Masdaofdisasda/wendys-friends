@@ -4,6 +4,13 @@ public class Horse {
     private Long id;
     private String name;
 
+    public Horse(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+    public Horse(){
+    }
+
     public Long getId() {
         return id;
     }

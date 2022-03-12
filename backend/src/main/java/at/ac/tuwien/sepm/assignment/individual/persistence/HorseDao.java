@@ -1,6 +1,8 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence;
 
+import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 
 import java.util.List;
 
@@ -14,4 +16,8 @@ public interface HorseDao {
      * @return a list of all stored horses
      */
     List<Horse> getAll();
+
+    Horse getOneById(Long id) throws NotFoundException;
+
+    Horse save(HorseDto horseDto);
 }

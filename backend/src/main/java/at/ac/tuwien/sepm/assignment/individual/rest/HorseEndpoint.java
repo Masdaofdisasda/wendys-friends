@@ -1,17 +1,22 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.mapper.HorseMapper;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(path = "/horses")
 public class HorseEndpoint {
+    //static final String BASE_URL = "/owners";
+    //private static final Logger LOGGER = LoggerFactory.getLogger(OwnerEndpoint.class);
     private final HorseService service;
     private final HorseMapper mapper;
 
@@ -25,4 +30,24 @@ public class HorseEndpoint {
         return service.allHorses().stream()
                 .map(mapper::entityToDto);
     }
+
+    @GetMapping(value = "/{id}")
+    public HorseDto getOneById(@PathVariable("id") Long id) {
+        //LOGGER.info("GET "+ BASE_URL + "/{}", id); // BASE_URL is a constant expression. id is not.
+        try {
+            return mapper.entityToDto(service.getOneById(id));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public HorseDto createHorse(@RequestBody final HorseDto horseDto) {
+        //try {
+            return mapper.entityToDto(service.save(horseDto));
+        //} catch (ValidationException e) {
+        //    throw new
+        //            ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+        }
 }
