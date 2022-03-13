@@ -12,10 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -56,16 +53,26 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public Horse save(HorseDto horseDto) {
         final String sql = "INSERT INTO " + TABLE_NAME +
-                " (name)" +
+                " (name)" + "(description)" + "(birthdate)" + "(sex)" + "(owner)" +
                 " VALUES (?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         HorseDto finalHorseDto = horseDto;
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, finalHorseDto.name());
+            stmt.setString(2, finalHorseDto.description());
+            stmt.setDate(3, (Date) finalHorseDto.birthdate());
+            stmt.setInt(4, finalHorseDto.sex());
+            stmt.setString(5, finalHorseDto.owner());
             return stmt;
         }, keyHolder);
-        horseDto = new HorseDto(((Number)keyHolder.getKeys().get("id")).longValue(), horseDto.name());
+        horseDto = new HorseDto(((Number)keyHolder.getKeys().get("id")).longValue(),
+                horseDto.name(),
+                horseDto.description(),
+                horseDto.birthdate(),
+                horseDto.sex(),
+                horseDto.owner()
+        );
         return mapper.dtoToEntity(horseDto);
     }
 

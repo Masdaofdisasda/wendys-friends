@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class HorseMapper {
 
-    public HorseDto entityToDto(Horse horse) {
-        return new HorseDto(horse.getId(), horse.getName());
+    public HorseDto entityToDto(Horse horse)
+    {
+        return new HorseDto(horse.getId(), horse.getName(), horse.getDescription(), horse.getBirthdate(), horse.getSex(), horse.getOwner());
     }
     public Horse dtoToEntity(HorseDto horseDto){
-        return new Horse(horseDto.id(),horseDto.name());
+        return new Horse(horseDto.id(),horseDto.name(), horseDto.description(), horseDto.birthdate(), horseDto.sex(), horseDto.owner());
     }
 }
