@@ -26,6 +26,16 @@
   <button class="btn btn-light mr-1" (click)="reloadHorses()">&#x21bb;</button>
 </div>
 
+<div>
+  <label for="new-horse">Horse name: </label>
+  <input id="new-horse" #horseName />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="add(horseName.value); horseName.value=''">
+    Add horse
+  </button>
+</div>
+
 <div class="mt-3">
   <table class="table table-hover">
     <thead>
