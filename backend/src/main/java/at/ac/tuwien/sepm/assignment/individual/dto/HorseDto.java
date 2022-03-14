@@ -6,6 +6,6 @@ import java.util.Date;
  * Class for Horse DTOs
  * Contains all common properties
  */
-public record HorseDto(Long id, String name, String description, Date birthdate, int sex, String owner ) {
+public record HorseDto(Long id, String name, String description, Date birthdate, String gender, String owner ) {
 
 }

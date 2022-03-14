@@ -7,15 +7,15 @@ public class Horse {
     private String name;
     private String description;
     private Date birthdate;
-    private int sex;
+    private String gender;
     private String owner;
 
-    public Horse(Long id, String name, String description, Date birthdate, int sex, String owner ){
+    public Horse(Long id, String name, String description, Date birthdate, String gender, String owner ){
         this.id = id;
         this.name = name;
         this.description = description;
         this.birthdate = birthdate;
-        this.sex = sex;
+        this.gender = gender;
         this.owner = owner;
     }
     public Horse(){
@@ -39,10 +39,22 @@ public class Horse {
 
     public String getDescription(){ return description;}
 
+    public void setDescription(String description) { this.description = description;}
+
     public Date getBirthdate(){return birthdate;}
 
-    public int getSex() {return sex;}
+    public void setBirthdate(Date birthdate){this.birthdate = birthdate;}
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender){
+        this.gender = gender;
+    }
 
     public String getOwner(){return owner;}
+
+    public void setOwner( String owner){this.owner = owner;}
 
 }

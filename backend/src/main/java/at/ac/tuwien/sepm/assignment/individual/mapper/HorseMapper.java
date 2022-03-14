@@ -9,9 +9,9 @@ public class HorseMapper {
 
     public HorseDto entityToDto(Horse horse)
     {
-        return new HorseDto(horse.getId(), horse.getName(), horse.getDescription(), horse.getBirthdate(), horse.getSex(), horse.getOwner());
+        return new HorseDto(horse.getId(), horse.getName(), horse.getDescription(), horse.getBirthdate(), horse.getGender(), horse.getOwner());
     }
     public Horse dtoToEntity(HorseDto horseDto){
-        return new Horse(horseDto.id(),horseDto.name(), horseDto.description(), horseDto.birthdate(), horseDto.sex(), horseDto.owner());
+        return new Horse(horseDto.id(),horseDto.name(), horseDto.description(), horseDto.birthdate(), horseDto.gender(), horseDto.owner());
     }
 }

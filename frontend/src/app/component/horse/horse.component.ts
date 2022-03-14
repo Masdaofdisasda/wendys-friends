@@ -33,10 +33,10 @@ export class HorseComponent implements OnInit {
     });
   }
 
-  add(name: string): void {
+  add(name: string, description: string, birthdate: Date, gender: string, owner: string): void {
     name = name.trim();
     if (!name) {return;}
-    this.service.addHorse({name} as Horse).subscribe(horse => {this.horses.push(horse);});
+    this.service.addHorse({name, description, birthdate, gender, owner} as Horse).subscribe(horse => {this.horses.push(horse);});
   }
 
   public vanishError(): void {

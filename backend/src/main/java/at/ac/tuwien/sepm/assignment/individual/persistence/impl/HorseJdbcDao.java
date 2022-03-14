@@ -53,16 +53,16 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public Horse save(HorseDto horseDto) {
         final String sql = "INSERT INTO " + TABLE_NAME +
-                " (name)" + "(description)" + "(birthdate)" + "(sex)" + "(owner)" +
-                " VALUES (?);";
+                " (name, description, birthdate, gender, owner)" +
+                " VALUES (?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         HorseDto finalHorseDto = horseDto;
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, finalHorseDto.name());
             stmt.setString(2, finalHorseDto.description());
-            stmt.setDate(3, (Date) finalHorseDto.birthdate());
-            stmt.setInt(4, finalHorseDto.sex());
+            stmt.setDate(3, new Date(finalHorseDto.birthdate().getTime()));
+            stmt.setString(4, finalHorseDto.gender());
             stmt.setString(5, finalHorseDto.owner());
             return stmt;
         }, keyHolder);
@@ -70,7 +70,7 @@ public class HorseJdbcDao implements HorseDao {
                 horseDto.name(),
                 horseDto.description(),
                 horseDto.birthdate(),
-                horseDto.sex(),
+                horseDto.gender(),
                 horseDto.owner()
         );
         return mapper.dtoToEntity(horseDto);
@@ -80,6 +80,10 @@ public class HorseJdbcDao implements HorseDao {
         Horse horse = new Horse();
         horse.setId(result.getLong("id"));
         horse.setName(result.getString("name"));
+        horse.setDescription(result.getString("description"));
+        horse.setBirthdate(result.getDate("birthdate"));
+        horse.setGender(result.getString("gender"));
+        horse.setOwner(result.getString("owner"));
         return horse;
     }
 }
