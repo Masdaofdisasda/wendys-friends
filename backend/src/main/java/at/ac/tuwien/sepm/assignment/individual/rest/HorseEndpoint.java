@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping(path = "/horses")
 public class HorseEndpoint {
-    //static final String BASE_URL = "/owners";
     //private static final Logger LOGGER = LoggerFactory.getLogger(OwnerEndpoint.class);
     private final HorseService service;
     private final HorseMapper mapper;

@@ -5,18 +5,25 @@
 <div>
   <label for="new-horse-name">name: </label>
   <input id="new-horse-name" #horseName />
+
   <label for="new-horse-desc">description: </label>
   <input id="new-horse-desc" #horseDesc />
+
   <label for="new-horse-date">birhtdate: </label>
-  <input id="new-horse-date" #horseDate />
-  <label for="new-horse-sex">sex: </label>
-  <input id="new-horse-sex" #horseSex />
+  <input type="date" id="new-horse-date" #horseDate />
+
+  <label for="new-horse-gender">gender: </label>
+  <select name="demo" #horseSex>
+    <option selected="selected" id="new-horse-gender" value="m">male</option>
+    <option value="f">female</option>
+  </select>
+
   <label for="new-horse-owner">owner: </label>
   <input id="new-horse-owner" #horseOwner />
 
   <!-- (click) passes input value to add() and then clears the input -->
   <button type="button" class="add-button" (click)=
-    "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.valueAsNumber, horseOwner.value); horseName.value=''">
+    "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value); horseName.value=''">
     Add horse
   </button>
 </div>

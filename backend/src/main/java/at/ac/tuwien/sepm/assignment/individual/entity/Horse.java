@@ -1,16 +1,17 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class Horse {
     private Long id;
     private String name;
     private String description;
-    private Date birthdate;
+    private LocalDate birthdate;
     private String gender;
     private String owner;
 
-    public Horse(Long id, String name, String description, Date birthdate, String gender, String owner ){
+    public Horse(Long id, String name, String description, LocalDate birthdate, String gender, String owner ){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,9 +42,9 @@ public class Horse {
 
     public void setDescription(String description) { this.description = description;}
 
-    public Date getBirthdate(){return birthdate;}
+    public LocalDate getBirthdate(){return birthdate;}
 
-    public void setBirthdate(Date birthdate){this.birthdate = birthdate;}
+    public void setBirthdate(Date birthdate){ this.birthdate = birthdate.toLocalDate();}
 
     public String getGender() {
         return gender;
