@@ -6,6 +6,9 @@ import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.mapper.HorseMapper;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
+import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,7 +22,7 @@ import java.util.List;
 public class HorseJdbcDao implements HorseDao {
     private static final String TABLE_NAME = "horse";
     private static final String SQL_SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
-    //private static final Logger LOGGER = LoggerFactory.getLogger(OwnerJdbcDao.class);
+    private static final Logger log = LoggerFactory.getLogger(HorseJdbcDao.class);
 
     private final JdbcTemplate jdbcTemplate;
     private final HorseMapper mapper;
@@ -30,6 +33,7 @@ public class HorseJdbcDao implements HorseDao {
 
     @Override
     public List<Horse> getAll() {
+        log.trace("get all horses");
         try {
             return jdbcTemplate.query(SQL_SELECT_ALL, this::mapRow);
         } catch (DataAccessException e) {
@@ -39,7 +43,7 @@ public class HorseJdbcDao implements HorseDao {
 
     @Override
     public Horse getOneById(Long id) throws NotFoundException {
-        //LOGGER.info("Get owner with id {}", id);
+        log.trace("Get horse with id {}", id);
         if (id <= 0){
             throw new IllegalArgumentException("id must best be greater than zero");
         }
@@ -52,6 +56,7 @@ public class HorseJdbcDao implements HorseDao {
 
     @Override
     public Horse save(HorseDto horseDto) {
+        log.trace("save new horse named " + horseDto.name());
         final String sql = "INSERT INTO " + TABLE_NAME +
                 " (name, description, birthdate, gender, owner)" +
                 " VALUES (?,?,?,?,?);";
@@ -77,6 +82,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {
+        log.trace("map horse " + result.getString("name") + " to entity");
         Horse horse = new Horse();
         horse.setId(result.getLong("id"));
         horse.setName(result.getString("name"));
