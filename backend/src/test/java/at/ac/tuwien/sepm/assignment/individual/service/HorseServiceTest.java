@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,6 +54,20 @@ public class HorseServiceTest {
     assertThat(horses.get(1).getBirthdate()).isEqualTo(LocalDate.of(2020, 7, 24));
     assertThat(horses.get(1).getGender()).isEqualTo("f");
     assertThat(horses.get(1).getOwner()).isEqualTo("John Marston");
+  }
+
+  @Test
+  public void saveHorseReturnsException(){
+    HorseDto horseDto1 = new HorseDto(1L, "", "is a horse1", LocalDate.of(2020, 7, 24), "f", "John Marston");
+    HorseDto horseDto2 = new HorseDto(2L, "horse2", "is a horse2", LocalDate.of(2030, 7, 24), "f", "John Marston");
+    HorseDto horseDto3 = new HorseDto(3L, "horse3", "is a horse3", LocalDate.of(2020, 7, 24), "", "John Marston");
+
+    Assertions.assertThrows(ValidationException.class, ()->{
+      horseService.save(horseDto1);
+      horseService.save(horseDto2);
+      horseService.save(horseDto3);
+    });
+
   }
 
 }
