@@ -9,8 +9,9 @@ logging:
               individual: DEBUG
   file:
     name: ./log/wendys-friends.log
-  pattern:
-    file: %d{yyyy-MM-dd}
+  logback:
+    rollingpolicy:
+      file-name-pattern: wendys-friends-%d{yyyy-MM-dd-HH-mm-ss}.%i.log
 spring:
   application:
     name: wendys-family-tree
