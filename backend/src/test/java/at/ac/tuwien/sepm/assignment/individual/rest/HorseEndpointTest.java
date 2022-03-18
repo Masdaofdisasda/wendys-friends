@@ -49,7 +49,7 @@ public class HorseEndpointTest {
     List<HorseDto> horseResult = objectMapper.readerFor(HorseDto.class).<HorseDto>readValues(body).readAll();
 
     assertThat(horseResult).isNotNull();
-    assertThat(horseResult.size()).isEqualTo(1);
+    assertThat(horseResult.size()).isEqualTo(2);
     assertThat(horseResult.get(0).id()).isEqualTo(-1);
     assertThat(horseResult.get(0).name()).isEqualTo("Wendy");
   }
