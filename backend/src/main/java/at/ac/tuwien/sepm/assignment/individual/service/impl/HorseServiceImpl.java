@@ -3,9 +3,11 @@ package at.ac.tuwien.sepm.assignment.individual.service.impl;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.rest.HorseEndpoint;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
+import at.ac.tuwien.sepm.assignment.individual.service.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
@@ -13,19 +15,25 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("HorseServiceImpl")
 public class HorseServiceImpl implements HorseService {
     private final HorseDao dao;
     private static final Logger log = LoggerFactory.getLogger(HorseService.class);
+    private final Validator validator;
 
-    public HorseServiceImpl(HorseDao dao) {
+    public HorseServiceImpl(HorseDao dao, Validator val) {
         this.dao = dao;
+        this.validator = val;
     }
 
     @Override
-    public List<Horse> allHorses() {
+    public List<Horse> allHorses() throws PersistenceException {
         log.trace("get all horses");
-        return dao.getAll();
+        try {
+            return dao.getAll();
+        } catch (PersistenceException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -35,11 +43,15 @@ public class HorseServiceImpl implements HorseService {
     }
 
     @Override
-    public Horse save(HorseDto horseDto) {
-        log.trace("save new horse named " + horseDto.name());
-        if (horseDto.name().trim().isEmpty()) throw new IllegalArgumentException("horse doesn't have a name");
-        if (horseDto.birthdate().isAfter(java.time.LocalDate.now())) throw new IllegalArgumentException("horse was not born yet");
+    public void save(HorseDto horseDto) {
+        log.trace("save()");
+        validator.validateSaveHorse(horseDto);
+        log.debug("horse fields are valid");
+        try {
+            dao.saveHorse(horseDto);
+        } catch (Exception e) {
+            e.printStackTrace(); //TODO
+        }
 
-        return dao.save(horseDto);
     }
 }

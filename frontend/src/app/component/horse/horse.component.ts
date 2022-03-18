@@ -37,6 +37,7 @@ export class HorseComponent implements OnInit {
     name = name.trim();
     if (!name) {return;}
     this.service.addHorse({name, description, birthdate, gender, owner} as Horse).subscribe(horse => {this.horses.push(horse);});
+    this.reloadHorses();
   }
 
   public vanishError(): void {

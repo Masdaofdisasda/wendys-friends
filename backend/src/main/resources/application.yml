@@ -11,7 +11,7 @@ logging:
     name: ./log/wendys-friends.log
   logback:
     rollingpolicy:
-      file-name-pattern: wendys-friends-%d{yyyy-MM-dd-HH-mm-ss}.%i.log
+      file-name-pattern: wendys-friends-%d{yyyy-MM-dd}.%i.log
 spring:
   application:
     name: wendys-family-tree

@@ -1,6 +1,9 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 
+import at.ac.tuwien.sepm.assignment.individual.exception.DataValidationException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.mapper.HorseMapper;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
@@ -29,8 +32,13 @@ public class HorseEndpoint {
     @GetMapping
     public Stream<HorseDto> allHorses() {
         log.info("GET "+ "/horses");
-        return service.allHorses().stream()
-                .map(mapper::entityToDto);
+        try {
+            return service.allHorses().stream()
+                    .map(mapper::entityToDto);
+        } catch (PersistenceException e) {
+            log.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage() );
+        }
     }
 
     @GetMapping(value = "/{id}")
@@ -39,19 +47,32 @@ public class HorseEndpoint {
         try {
             return mapper.entityToDto(service.getOneById(id));
         } catch (NotFoundException e) {
-            log.error("Error finding horse");
+            log.error("Error finding horse - " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error finding horse", e);
         }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public HorseDto createHorse(@RequestBody final HorseDto horseDto) {
-        log.info("POST " + "create horse " + horseDto.name());
-        //try {
-            return mapper.entityToDto(service.save(horseDto));
-        //} catch (ValidationException e) {
-        //    throw new
-        //            ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+    public void createHorse(@RequestBody final HorseDto horseDto) {
+        log.info("POST " + "create horse " + horseDto);
+        try {
+            service.save(horseDto);
+        } catch (Exception e) {
+            throw handleException(e, "create horse " + horseDto);
         }
+    }
+
+    private ResponseStatusException handleException(Exception e, String message) {
+        log.error(message,e);
+        if(e instanceof ValidationException){
+            return new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }else if(e instanceof NotFoundException){
+            return  new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }else if(e instanceof DataValidationException){
+            return new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
+        }else{
+            return new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+        }
+    }
 }

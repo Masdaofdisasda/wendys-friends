@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.List;
 
-@Repository
+@Repository("HorseJdbcDao")
 public class HorseJdbcDao implements HorseDao {
     private static final String TABLE_NAME = "horse";
     private static final String SQL_SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
@@ -32,7 +32,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public List<Horse> getAll() {
+    public List<Horse> getAll() throws PersistenceException {
         log.trace("get all horses");
         try {
             return jdbcTemplate.query(SQL_SELECT_ALL, this::mapRow);
@@ -55,8 +55,8 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse save(HorseDto horseDto) {
-        log.trace("save new horse named " + horseDto.name());
+    public void saveHorse(HorseDto horseDto) {
+        log.trace("saveHorse()");
         final String sql = "INSERT INTO " + TABLE_NAME +
                 " (name, description, birthdate, gender, owner)" +
                 " VALUES (?,?,?,?,?);";
@@ -71,14 +71,7 @@ public class HorseJdbcDao implements HorseDao {
             stmt.setString(5, finalHorseDto.owner());
             return stmt;
         }, keyHolder);
-        horseDto = new HorseDto(((Number)keyHolder.getKeys().get("id")).longValue(),
-                horseDto.name(),
-                horseDto.description(),
-                horseDto.birthdate(),
-                horseDto.gender(),
-                horseDto.owner()
-        );
-        return mapper.dtoToEntity(horseDto);
+        log.debug("horse saved in database");
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {

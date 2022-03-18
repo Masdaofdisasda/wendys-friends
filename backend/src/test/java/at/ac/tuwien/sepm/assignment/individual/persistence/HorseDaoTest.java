@@ -2,6 +2,8 @@ package at.ac.tuwien.sepm.assignment.individual.persistence;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import java.util.List;
+
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +19,7 @@ public class HorseDaoTest {
   HorseDao horseDao;
 
   @Test
-  public void getAllReturnsAllStoredHorses() {
+  public void getAllReturnsAllStoredHorses() throws PersistenceException {
     List<Horse> horses = horseDao.getAll();
     assertThat(horses.size()).isEqualTo(1);
     assertThat(horses.get(0).getId()).isEqualTo(-1);

@@ -1,3 +1,10 @@
-US 1 - 12.3 - 7h
-US 1 - 13.3 - 5h
-US 1 - 14.3 - 5h
+name: David Köppl
+student-id: 12022493
+
+user story | date | duration
+US 1        12.3        7h
+US 1        13.3        5h
+US 1        14.3        5h
+US 1        18.3        3h
+------------------------------
+sum over all hours:     20h
