@@ -20,9 +20,9 @@ public interface HorseDao {
 
     /**
      * Find a single horse according to its id
-     * @param id is a unique number
+     * @param id of the horse
      * @return a Horse with the id
-     * @throws NotFoundException
+     * @throws NotFoundException if the horse could not be found
      */
     Horse getOneById(Long id) throws NotFoundException;
 

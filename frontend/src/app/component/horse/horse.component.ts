@@ -10,6 +10,8 @@ import {HorseService} from 'src/app/service/horse.service';
 export class HorseComponent implements OnInit {
   search = false;
   horses: Horse[];
+  selectedHorseView?: Horse;
+  selectedHorseEdit?: Horse;
   error: string = null;
 
   constructor(
@@ -18,6 +20,14 @@ export class HorseComponent implements OnInit {
 
   ngOnInit(): void {
     this.reloadHorses();
+  }
+
+  onSelectView(horse: Horse): void {
+    this.selectedHorseView = horse;
+  }
+
+  onSelectEdit(horse: Horse): void {
+    this.selectedHorseEdit = horse;
   }
 
   reloadHorses() {
@@ -33,12 +43,7 @@ export class HorseComponent implements OnInit {
     });
   }
 
-  add(name: string, description: string, birthdate: Date, gender: string, owner: string): void {
-    name = name.trim();
-    if (!name) {return;}
-    this.service.addHorse({name, description, birthdate, gender, owner} as Horse).subscribe(horse => {this.horses.push(horse);});
-    this.reloadHorses();
-  }
+
 
   public vanishError(): void {
     this.error = null;

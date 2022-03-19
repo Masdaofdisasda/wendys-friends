@@ -46,9 +46,8 @@ public class HorseEndpoint {
         log.info("GET "+ "/horses" + "/{}", id);
         try {
             return mapper.entityToDto(service.getOneById(id));
-        } catch (NotFoundException e) {
-            log.error("Error finding horse - " + e.getMessage());
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error finding horse", e);
+        } catch (Exception e) {
+            throw handleException(e, "getOneByID()" + id);
         }
     }
 

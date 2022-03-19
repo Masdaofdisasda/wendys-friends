@@ -5,6 +5,7 @@ user story | date | duration
 US 1        12.3        7h
 US 1        13.3        5h
 US 1        14.3        5h
-US 1        18.3        3h
+US 1-2      18.3        7h
+US 2        19.3        2h
 ------------------------------
-sum over all hours:     20h
+sum over all hours:     26h

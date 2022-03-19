@@ -24,7 +24,7 @@ public interface HorseService {
      * forwards request to get a single horse to persistence
      * @param id number bigger than 0
      * @return horse with id
-     * @throws NotFoundException
+     * @throws NotFoundException if no such horse was found
      */
     Horse getOneById(Long id) throws NotFoundException;
 

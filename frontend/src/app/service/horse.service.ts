@@ -13,7 +13,7 @@ const baseUri = environment.backendUrl + '/horses';
 export class HorseService {
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'content-type': 'application/json' })
   };
 
   constructor(
@@ -34,6 +34,16 @@ export class HorseService {
     return this.http.post<Horse>(baseUri, horse, this.httpOptions).pipe(
       catchError(this.handleError<Horse>('addHero'))
     );
+  }
+
+  updateHorses(horse: Horse): Observable<Horse> {
+    return this.http.put<Horse>(baseUri, horse, this.httpOptions).pipe(
+      catchError(this.handleError<Horse>('addHero'))
+    );
+  }
+
+  getHorse(id: number): Observable<Horse> {
+    return this.http.get<Horse>('horses' + '/' + id);
   }
 
   /**

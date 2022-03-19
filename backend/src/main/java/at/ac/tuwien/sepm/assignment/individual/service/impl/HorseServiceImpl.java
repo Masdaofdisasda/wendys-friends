@@ -37,9 +37,15 @@ public class HorseServiceImpl implements HorseService {
     }
 
     @Override
-    public Horse getOneById(Long id) throws NotFoundException {
-        log.trace("Get horse with id {}", id);
-        return dao.getOneById(id);
+    public Horse getOneById(Long id) {
+        log.trace("getOneById()", id);
+        try {
+            return dao.getOneById(id);
+        } catch (NotFoundException e) {
+            e.printStackTrace(); //TODO
+        }
+
+        return null;
     }
 
     @Override

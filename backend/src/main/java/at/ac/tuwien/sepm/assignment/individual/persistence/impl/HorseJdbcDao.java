@@ -44,13 +44,11 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public Horse getOneById(Long id) throws NotFoundException {
         log.trace("Get horse with id {}", id);
-        if (id <= 0){
-            throw new IllegalArgumentException("id must best be greater than zero");
-        }
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Horse> horses = jdbcTemplate.query(sql, this::mapRow, id);
-        if (horses.isEmpty()) throw new NotFoundException(String.format("Could not find owner with id %s", id));
+        if (horses.isEmpty()) throw new NotFoundException("Could not find owner with id" + id);
+        log.debug("horse found");
         return horses.get(0);
     }
 

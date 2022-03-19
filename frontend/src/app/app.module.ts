@@ -8,12 +8,18 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {HorseComponent} from './component/horse/horse.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HorseDetailComponent } from './horse-detail/horse-detail.component';
+import { HorseUpdateComponent } from './horse-update/horse-update.component';
+import { HorseAddComponent } from './horse-add/horse-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HorseComponent,
+    HorseDetailComponent,
+    HorseUpdateComponent,
+    HorseAddComponent,
   ],
   imports: [
     BrowserModule,
