@@ -12,6 +12,7 @@ export class HorseComponent implements OnInit {
   horses: Horse[];
   selectedHorseView?: Horse;
   selectedHorseEdit?: Horse;
+  selectedHorseDelete?: Horse;
   error: string = null;
 
   constructor(
@@ -28,6 +29,10 @@ export class HorseComponent implements OnInit {
 
   onSelectEdit(horse: Horse): void {
     this.selectedHorseEdit = horse;
+  }
+
+  onSelectDelete(horse: Horse): void {
+    this.selectedHorseDelete = horse;
   }
 
   reloadHorses() {

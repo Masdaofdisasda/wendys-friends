@@ -16,7 +16,7 @@ export class HorseDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: HorseService,
-    private location: Location) { }
+    ) { }
 
   ngOnInit(): void {
   }

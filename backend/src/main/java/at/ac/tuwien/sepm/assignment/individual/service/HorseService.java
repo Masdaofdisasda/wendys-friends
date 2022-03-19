@@ -37,9 +37,17 @@ public interface HorseService {
     void save(HorseDto horseDto) throws ValidationException;
 
     /**
+     * changes data
      * @param horseDto horse to be changed
      * @throws NotFoundException if horse does not exist in database
      * @throws ValidationException when horse is invalid
      */
     void updateHorse(HorseDto horseDto);
+
+    /** removes database entry
+     * @param id of horse to delete
+     * @throws NotFoundException if horse does not exist in database.
+     * */
+    void deleteHorse(Long id);
+
 }

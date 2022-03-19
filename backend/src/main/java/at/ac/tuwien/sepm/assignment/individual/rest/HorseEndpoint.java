@@ -61,6 +61,7 @@ public class HorseEndpoint {
             throw handleException(e, "create horse " + horseDto);
         }
     }
+
     @PutMapping
     public void updateHorse(@RequestBody final HorseDto horseDto){
         log.info("PUT " + "update horse " + horseDto);
@@ -68,6 +69,16 @@ public class HorseEndpoint {
             service.updateHorse(horseDto);
         } catch (Exception e) {
             e.printStackTrace(); //TODO
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteHorse(@PathVariable("id") Long id){
+        log.info("DELETE " + "/horses " + "/{}", id);
+        try {
+            service.deleteHorse(id);
+        } catch (Exception e){
+            //TODO
         }
     }
 

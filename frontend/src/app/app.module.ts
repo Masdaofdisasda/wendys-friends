@@ -11,6 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HorseDetailComponent } from './horse-detail/horse-detail.component';
 import { HorseUpdateComponent } from './horse-update/horse-update.component';
 import { HorseAddComponent } from './horse-add/horse-add.component';
+import { HorseDeleteComponent } from './horse-delete/horse-delete.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HorseAddComponent } from './horse-add/horse-add.component';
     HorseDetailComponent,
     HorseUpdateComponent,
     HorseAddComponent,
+    HorseDeleteComponent,
   ],
   imports: [
     BrowserModule,

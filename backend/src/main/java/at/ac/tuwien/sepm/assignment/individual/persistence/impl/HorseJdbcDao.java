@@ -73,6 +73,7 @@ public class HorseJdbcDao implements HorseDao {
         log.debug("horse saved in database");
     }
 
+    @Override
     public void updateHorse(HorseDto horseDto){
         log.trace("updateHorse()" + horseDto.id());
         final String sql = "UPDATE " + TABLE_NAME +
@@ -90,8 +91,23 @@ public class HorseJdbcDao implements HorseDao {
             log.debug(stmt.toString());
             return stmt;
         });
-        if (i == 0) throw new NotFoundException("Horse does not exist yet");
+        if (i == 0) throw new NotFoundException("horse does not exist yet");
         log.debug("horse changes are saved");
+    }
+
+    @Override
+    public void deleteHorse(Long id){
+        log.trace("deleteHorse()",id);
+        final String sql = "DELETE FROM " + TABLE_NAME +
+                " WHERE id=?";
+        int i = jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, id);
+            log.debug(stmt.toString());
+            return stmt;
+        });
+        if (i == 0) throw new NotFoundException("horse does not exist");
+        log.debug("horse was deleted");
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {

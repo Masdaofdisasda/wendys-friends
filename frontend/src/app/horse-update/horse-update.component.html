@@ -4,13 +4,13 @@
 
   <div>
     <label for="new-horse-name">name: </label>
-    <input id="new-horse-name" #horseName [(ngModel)]="horse.name" placeholder="name"/>
+    <input id="new-horse-name" #horseName placeholder="required"/>
 
     <label for="new-horse-desc">description: </label>
-    <input id="new-horse-desc" #horseDesc />
+    <input id="new-horse-desc" #horseDesc placeholder="optional" />
 
     <label for="new-horse-date">birhtdate: </label>
-    <input type="date" id="new-horse-date" #horseDate />
+    <input type="date" id="new-horse-date" #horseDate placeholder="required"/>
 
     <label for="new-horse-gender">gender: </label>
     <select name="demo" #horseSex>
@@ -19,7 +19,7 @@
     </select>
 
     <label for="new-horse-owner">owner: </label>
-    <input id="new-horse-owner" #horseOwner />
+    <input id="new-horse-owner" #horseOwner placeholder="optional"/>
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=
@@ -31,4 +31,11 @@
     </button>
   </div>
 
+</div>
+
+<div *ngIf="success">
+  horse was successfully updated
+  <button type="button" class="add-button" (click)="success=false">
+    ok
+  </button>
 </div>

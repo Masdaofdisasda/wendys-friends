@@ -46,6 +46,12 @@ export class HorseService {
     return this.http.get<Horse>('horses' + '/' + id);
   }
 
+  deleteHorse(id: number): Observable<Horse>{
+    return this.http.delete<Horse>(baseUri + '/' + id, this.httpOptions).pipe(
+      catchError(this.handleError<Horse>('deleteHero'))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

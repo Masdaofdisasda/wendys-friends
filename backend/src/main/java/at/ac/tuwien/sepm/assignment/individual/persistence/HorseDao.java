@@ -34,8 +34,16 @@ public interface HorseDao {
     void saveHorse(HorseDto horseDto);
 
     /**
+     * change horse data
      * @param horseDto horse to be changed
      * @throws NotFoundException if horse is not in database.
      */
     void updateHorse(HorseDto horseDto);
+
+    /**
+     * deletes horse entry
+     * @param id of horse to be deleted
+     */
+    public void deleteHorse(Long id);
+
 }

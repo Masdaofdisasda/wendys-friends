@@ -10,6 +10,7 @@ import {HorseService} from '../service/horse.service';
 export class HorseUpdateComponent implements OnInit {
   @Input() horse: Horse;
   horses: Horse[];
+  success = false;
 
   constructor(
     private service: HorseService,
@@ -19,8 +20,8 @@ export class HorseUpdateComponent implements OnInit {
   }
 
   update(id: number, name: string, description: string, birthdate: Date, gender: string, owner: string): void {
-    name = name.trim();
-    if (!name) {return;}
     this.service.updateHorses({id, name, description, birthdate, gender, owner} as Horse).subscribe(horse => {this.horses.push(horse);});
+    this.horse=null;
+    this.success = true;
   }
 }

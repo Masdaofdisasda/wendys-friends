@@ -72,4 +72,15 @@ public class HorseServiceImpl implements HorseService {
             e.printStackTrace(); //TODO
         }
     }
+
+    @Override
+    public void deleteHorse(Long id){
+        log.trace("deleteHorse", id);
+        try {
+            validator.validateDeleteHorse(id);
+            dao.deleteHorse(id);
+        } catch (Exception e) {
+            e.printStackTrace(); //TODo
+        }
+    }
 }

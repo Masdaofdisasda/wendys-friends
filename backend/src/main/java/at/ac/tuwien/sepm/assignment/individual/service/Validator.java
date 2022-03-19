@@ -26,4 +26,8 @@ public class Validator {
         if (horseDto.name().trim().isEmpty() | horseDto.birthdate().isAfter(java.time.LocalDate.now()))
             throw new ValidationException("Empty name or impossible birthdate");
     }
+
+    public void validateDeleteHorse(Long id){
+        //TODO
+    }
 }
