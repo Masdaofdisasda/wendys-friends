@@ -1,0 +1,14 @@
+<div *ngIf="horse">
+
+  <h2>{{horse.name}} details:</h2>
+
+  <div>name: {{horse.name}}</div>
+  <div>description: {{horse.description}}</div>
+  <div>born: {{horse.birthdate}}</div>
+  <div>gender: {{horse.gender}}</div>
+  <div>owner: {{horse.owner}}</div>
+
+  <button type="button" class="add-button" (click)="horse=null">
+    close details
+  </button>
+</div>

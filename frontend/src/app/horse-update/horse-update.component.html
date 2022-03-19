@@ -1,0 +1,34 @@
+<div *ngIf="horse">
+
+  <h2>edit {{horse.name}}</h2>
+
+  <div>
+    <label for="new-horse-name">name: </label>
+    <input id="new-horse-name" #horseName [(ngModel)]="horse.name" placeholder="name"/>
+
+    <label for="new-horse-desc">description: </label>
+    <input id="new-horse-desc" #horseDesc />
+
+    <label for="new-horse-date">birhtdate: </label>
+    <input type="date" id="new-horse-date" #horseDate />
+
+    <label for="new-horse-gender">gender: </label>
+    <select name="demo" #horseSex>
+      <option selected="selected" id="new-horse-gender" value="m">male</option>
+      <option value="f">female</option>
+    </select>
+
+    <label for="new-horse-owner">owner: </label>
+    <input id="new-horse-owner" #horseOwner />
+
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button type="button" class="add-button" (click)=
+      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value); horseName.value=''">
+      save changes
+    </button>
+    <button type="button" class="add-button" (click)="horse=null">
+      cancel
+    </button>
+  </div>
+
+</div>
