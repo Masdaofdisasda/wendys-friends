@@ -32,4 +32,10 @@ public interface HorseDao {
      * @return the saved entity
      */
     void saveHorse(HorseDto horseDto);
+
+    /**
+     * @param horseDto horse to be changed
+     * @throws NotFoundException if horse is not in database.
+     */
+    void updateHorse(HorseDto horseDto);
 }

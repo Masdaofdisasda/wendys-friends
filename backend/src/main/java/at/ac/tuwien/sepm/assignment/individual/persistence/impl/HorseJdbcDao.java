@@ -67,9 +67,31 @@ public class HorseJdbcDao implements HorseDao {
             stmt.setDate(3, Date.valueOf(finalHorseDto.birthdate()));
             stmt.setString(4, finalHorseDto.gender());
             stmt.setString(5, finalHorseDto.owner());
+            log.debug(stmt.toString());
             return stmt;
         }, keyHolder);
         log.debug("horse saved in database");
+    }
+
+    public void updateHorse(HorseDto horseDto){
+        log.trace("updateHorse()" + horseDto.id());
+        final String sql = "UPDATE " + TABLE_NAME +
+                " SET "+ "name=? " + ", description=? " +", birthdate=? " +", gender=? " +", owner=? " +
+                " WHERE id=?;";
+
+        int i = jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, horseDto.name());
+            stmt.setString(2, horseDto.description());
+            stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
+            stmt.setString(4, horseDto.gender());
+            stmt.setString(5, horseDto.owner());
+            stmt.setLong(6, horseDto.id());
+            log.debug(stmt.toString());
+            return stmt;
+        });
+        if (i == 0) throw new NotFoundException("Horse does not exist yet");
+        log.debug("horse changes are saved");
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {

@@ -60,4 +60,16 @@ public class HorseServiceImpl implements HorseService {
         }
 
     }
+
+    @Override
+    public void updateHorse(HorseDto horseDto){
+        log.trace("updateHorse()");
+        validator.validateUpdateHorse(horseDto);
+        log.debug("horse fields are valid");
+        try {
+            dao.updateHorse(horseDto);
+        } catch (Exception e) {
+            e.printStackTrace(); //TODO
+        }
+    }
 }

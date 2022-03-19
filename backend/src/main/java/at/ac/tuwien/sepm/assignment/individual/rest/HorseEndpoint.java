@@ -61,6 +61,15 @@ public class HorseEndpoint {
             throw handleException(e, "create horse " + horseDto);
         }
     }
+    @PutMapping
+    public void updateHorse(@RequestBody final HorseDto horseDto){
+        log.info("PUT " + "update horse " + horseDto);
+        try{
+            service.updateHorse(horseDto);
+        } catch (Exception e) {
+            e.printStackTrace(); //TODO
+        }
+    }
 
     private ResponseStatusException handleException(Exception e, String message) {
         log.error(message,e);

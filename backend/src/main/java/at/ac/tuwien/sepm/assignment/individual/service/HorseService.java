@@ -35,4 +35,11 @@ public interface HorseService {
      * @throws ValidationException if any field is invalid
      */
     void save(HorseDto horseDto) throws ValidationException;
+
+    /**
+     * @param horseDto horse to be changed
+     * @throws NotFoundException if horse does not exist in database
+     * @throws ValidationException when horse is invalid
+     */
+    void updateHorse(HorseDto horseDto);
 }
