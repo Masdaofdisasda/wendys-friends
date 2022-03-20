@@ -22,6 +22,7 @@
     <input id="new-horse-mom" type="text"
            name="horseMom"
            class="form-control"
+           [(ngModel)]="selectedMom"
            [ngbTypeahead]="searchMom"
            [resultFormatter]="resultFormatBandListValue"
            [inputFormatter]="inputFormatMom"
@@ -33,6 +34,7 @@
     <input id="new-horse-dad" type="text"
            name="horseDad"
            class="form-control"
+           [(ngModel)]="selectedDad"
            [ngbTypeahead]="searchDad"
            [resultFormatter]="resultFormatBandListValue"
            [inputFormatter]="inputFormatDad"
@@ -42,7 +44,7 @@
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=
-      "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, chosenMom, chosenDad); horseName.value=''">
+      "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, selectedMom.id, selectedDad.id); horseName.value=''">
       add horse
     </button>
     <button type="button" class="add-button" (click)="active=false">

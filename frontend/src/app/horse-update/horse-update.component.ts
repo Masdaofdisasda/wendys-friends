@@ -13,8 +13,10 @@ export class HorseUpdateComponent implements OnInit {
   @Input() horse: Horse;
   horses: Horse[];
   success = false;
-  chosenMom?: number;
-  chosenDad?: number;
+  selectedMom?: Horse;
+  selectedDad?: Horse;
+  momName: string = 'no mother'; //TODO
+  dadName: string = 'no father';
 
   constructor(
     private service: HorseService,
@@ -28,6 +30,8 @@ export class HorseUpdateComponent implements OnInit {
       .subscribe(horse => {this.horses.push(horse);});
     this.horse=null;
     this.success = true;
+    this.selectedMom=null;
+    this.selectedDad=null;
   }
   searchMom = (text$: Observable<string>) => text$.pipe(
     debounceTime(200),
@@ -56,8 +60,7 @@ export class HorseUpdateComponent implements OnInit {
    */
   inputFormatMom(value: any)   {
     if(value.name)
-    { this.chosenMom = value.id;
-      return value.name;}
+    { return value.name;}
     return value;
   }
   /**
@@ -66,8 +69,7 @@ export class HorseUpdateComponent implements OnInit {
    */
   inputFormatDad(value: any)   {
     if(value.name)
-    { this.chosenDad = value.id;
-      return value.name;}
+    { return value.name;}
     return value;
   }
 }

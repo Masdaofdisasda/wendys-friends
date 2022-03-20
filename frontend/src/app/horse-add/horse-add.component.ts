@@ -12,8 +12,8 @@ import {HorseService} from '../service/horse.service';
 export class HorseAddComponent implements OnInit {
   active = false;
   horses: Horse[];
-  chosenMom?: number;
-  chosenDad?: number;
+  selectedMom?: Horse;
+  selectedDad?: Horse;
 
   constructor(
     private service: HorseService,
@@ -25,6 +25,9 @@ export class HorseAddComponent implements OnInit {
   add(name: string, description: string, birthdate: Date, gender: string, owner: string, mom: number, dad: number): void {
     this.service.addHorse({name, description, birthdate, gender, owner, mom, dad} as Horse)
       .subscribe(horse => {this.horses.push(horse);});
+    this.active=false;
+    this.selectedMom=null;
+    this.selectedDad=null;
   }
 
   searchMom = (text$: Observable<string>) => text$.pipe(
@@ -54,8 +57,7 @@ export class HorseAddComponent implements OnInit {
    */
   inputFormatMom(value: any)   {
     if(value.name)
-    { this.chosenMom = value.id;
-      return value.name;}
+    { return value.name;}
     return value;
   }
   /**
@@ -64,8 +66,7 @@ export class HorseAddComponent implements OnInit {
    */
   inputFormatDad(value: any)   {
     if(value.name)
-    { this.chosenDad = value.id;
-      return value.name;}
+    { return value.name;}
     return value;
   }
 

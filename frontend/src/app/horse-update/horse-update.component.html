@@ -4,13 +4,13 @@
 
   <div>
     <label for="new-horse-name">name: </label>
-    <input id="new-horse-name" #horseName placeholder="required"/>
+    <input id="new-horse-name" #horseName placeholder="{{horse.name}}"/>
 
     <label for="new-horse-desc">description: </label>
-    <input id="new-horse-desc" #horseDesc placeholder="optional" />
+    <input id="new-horse-desc" #horseDesc placeholder="{{horse.description}}" />
 
     <label for="new-horse-date">birhtdate: </label>
-    <input type="date" id="new-horse-date" #horseDate placeholder="required"/>
+    <input type="date" id="new-horse-date" #horseDate placeholder="{{horse.birthdate}}"/>
 
     <label for="new-horse-gender">gender: </label>
     <select name="demo" #horseSex>
@@ -19,32 +19,34 @@
     </select>
 
     <label for="new-horse-owner">owner: </label>
-    <input id="new-horse-owner" #horseOwner placeholder="optional"/>
+    <input id="new-horse-owner" #horseOwner placeholder="{{horse.owner}}"/>
     <label for="new-horse-mom">mother: </label>
     <input id="new-horse-mom" type="text"
            name="horseMom"
            class="form-control"
+           [(ngModel)]="selectedMom"
            [ngbTypeahead]="searchMom"
            [resultFormatter]="resultFormatBandListValue"
            [inputFormatter]="inputFormatMom"
            #instance="ngbTypeahead"
-           placeholder="optional"
+           placeholder="{{momName}} - leave blank to delete mother"
     />
 
     <label for="new-horse-dad">father: </label>
     <input id="new-horse-dad" type="text"
            name="horseDad"
            class="form-control"
+           [(ngModel)]="selectedDad"
            [ngbTypeahead]="searchDad"
            [resultFormatter]="resultFormatBandListValue"
            [inputFormatter]="inputFormatDad"
            #instance="ngbTypeahead"
-           placeholder="optional"
+           placeholder="{{dadName}} - leave blank to delete to delete father"
     />
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=
-      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, chosenMom, chosenDad); horseName.value=''">
+      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, selectedMom.id, selectedDad.id); horseName.value=''">
       save changes
     </button>
     <button type="button" class="add-button" (click)="horse=null">

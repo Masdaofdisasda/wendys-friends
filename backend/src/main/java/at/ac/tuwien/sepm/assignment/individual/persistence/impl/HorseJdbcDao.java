@@ -72,8 +72,8 @@ public class HorseJdbcDao implements HorseDao {
         int i = jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql);
             setValues(horseDto, stmt);
-            stmt.setLong(6, horseDto.id());
-            log.debug(stmt.toString());
+            stmt.setLong(8, horseDto.id());
+            log.debug(stmt.toString() + horseDto.id());
             return stmt;
         });
         if (i == 0) throw new NotFoundException("horse does not exist yet");
@@ -86,8 +86,16 @@ public class HorseJdbcDao implements HorseDao {
         stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
         stmt.setString(4, horseDto.gender());
         stmt.setString(5, horseDto.owner());
-        stmt.setLong(6, horseDto.mom());
-        stmt.setLong(7, horseDto.dad());
+        if (horseDto.mom() == null) {
+            stmt.setNull(6, Types.INTEGER);
+        } else {
+            stmt.setLong(6, horseDto.mom());
+        }
+        if (horseDto.dad() == null) {
+            stmt.setNull(7, Types.INTEGER);
+        } else {
+            stmt.setLong(7, horseDto.dad());
+        }
     }
 
     @Override
