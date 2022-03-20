@@ -89,6 +89,7 @@ public class HorseServiceImpl implements HorseService {
     @Override
     public List<Horse> getFemaleHorse(String searchText){
         log.trace("getFemaleHorse()", searchText);
+        validator.validateSearchText(searchText);
         try {
             return dao.getFemaleHorse(searchText);
         } catch (DataAccessException e) {
@@ -99,6 +100,7 @@ public class HorseServiceImpl implements HorseService {
     @Override
     public List<Horse> getMaleHorse(String searchText){
         log.trace("getMaleHorse()", searchText);
+        validator.validateSearchText(searchText);
         try {
             return dao.getMaleHorse(searchText);
         } catch (DataAccessException e) {

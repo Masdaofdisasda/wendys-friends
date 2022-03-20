@@ -20,10 +20,31 @@
 
     <label for="new-horse-owner">owner: </label>
     <input id="new-horse-owner" #horseOwner placeholder="optional"/>
+    <label for="new-horse-mom">mother: </label>
+    <input id="new-horse-mom" type="text"
+           name="horseMom"
+           class="form-control"
+           [ngbTypeahead]="searchMom"
+           [resultFormatter]="resultFormatBandListValue"
+           [inputFormatter]="inputFormatMom"
+           #instance="ngbTypeahead"
+           placeholder="optional"
+    />
+
+    <label for="new-horse-dad">father: </label>
+    <input id="new-horse-dad" type="text"
+           name="horseDad"
+           class="form-control"
+           [ngbTypeahead]="searchDad"
+           [resultFormatter]="resultFormatBandListValue"
+           [inputFormatter]="inputFormatDad"
+           #instance="ngbTypeahead"
+           placeholder="optional"
+    />
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=
-      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value); horseName.value=''">
+      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, chosenMom, chosenDad); horseName.value=''">
       save changes
     </button>
     <button type="button" class="add-button" (click)="horse=null">

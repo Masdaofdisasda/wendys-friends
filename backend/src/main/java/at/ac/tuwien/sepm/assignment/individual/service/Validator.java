@@ -1,16 +1,21 @@
 package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Component
 public class Validator {
     private HorseDao horseDao;
     private String date = "yyyy-MM-dd";
+
 
     @Autowired
     public Validator(@Qualifier("HorseJdbcDao") HorseDao horseDao){
@@ -18,16 +23,44 @@ public class Validator {
     }
 
     public void validateSaveHorse(HorseDto horseDto){
-        if (horseDto.name().trim().isEmpty() | horseDto.birthdate().isAfter(java.time.LocalDate.now()))
-            throw new ValidationException("Empty name or impossible birthdate");
+        validateFields(horseDto);
     }
 
     public void validateUpdateHorse(HorseDto horseDto){
+        validateFields(horseDto);
+    }
+
+    private void validateFields(HorseDto horseDto) {
         if (horseDto.name().trim().isEmpty() | horseDto.birthdate().isAfter(java.time.LocalDate.now()))
             throw new ValidationException("Empty name or impossible birthdate");
+        if (horseDto.mom()!=null ){
+            Horse mom;
+            try {
+                mom = horseDao.getOneById(horseDto.mom());
+            } catch (DataAccessException e){
+                throw new ValidationException("mother doesn't exist");
+            }
+            if (!mom.getGender().equals("f"))
+                throw new ValidationException("mother has wrong gender: mother is " + mom.getGender());
+        }
+        if (horseDto.dad()!=null ){
+            Horse dad;
+            try {
+                dad = horseDao.getOneById(horseDto.dad());
+            } catch (DataAccessException e){
+                throw new ValidationException("mother or father doesn't exist");
+            }
+            if (!dad.getGender().equals("m"))
+                throw new ValidationException("father has wrong gender: father is " + dad.getGender());
+        }
     }
 
     public void validateDeleteHorse(Long id){
         //TODO
+    }
+
+    public void validateSearchText(String searchText){
+        if (searchText.isEmpty() || searchText.isEmpty())
+            throw new ValidationException("search text is empty");
     }
 }

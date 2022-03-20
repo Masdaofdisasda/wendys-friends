@@ -24,9 +24,8 @@
            class="form-control"
            [ngbTypeahead]="searchMom"
            [resultFormatter]="resultFormatBandListValue"
-           [inputFormatter]="inputFormatBandListValue"
+           [inputFormatter]="inputFormatMom"
            #instance="ngbTypeahead"
-           #horseMom
            placeholder="optional"
     />
 
@@ -36,15 +35,14 @@
            class="form-control"
            [ngbTypeahead]="searchDad"
            [resultFormatter]="resultFormatBandListValue"
-           [inputFormatter]="inputFormatBandListValue"
+           [inputFormatter]="inputFormatDad"
            #instance="ngbTypeahead"
-           #horseDad
            placeholder="optional"
     />
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=
-      "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value); horseName.value=''">
+      "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, chosenMom, chosenDad); horseName.value=''">
       add horse
     </button>
     <button type="button" class="add-button" (click)="active=false">

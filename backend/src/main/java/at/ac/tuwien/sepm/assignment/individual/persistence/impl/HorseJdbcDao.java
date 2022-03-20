@@ -3,13 +3,10 @@ package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.mapper.HorseMapper;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
-import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -38,7 +35,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse getOneById(Long id) throws NotFoundException {
+    public Horse getOneById(Long id) {
         log.trace("Get horse with id {}", id);
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
@@ -52,17 +49,13 @@ public class HorseJdbcDao implements HorseDao {
     public void saveHorse(HorseDto horseDto) {
         log.trace("saveHorse()");
         final String sql = "INSERT INTO " + TABLE_NAME +
-                " (name, description, birthdate, gender, owner)" +
-                " VALUES (?,?,?,?,?);";
+                " (name, description, birthdate, gender, owner, mom, dad)" +
+                " VALUES (?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         HorseDto finalHorseDto = horseDto;
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, finalHorseDto.name());
-            stmt.setString(2, finalHorseDto.description());
-            stmt.setDate(3, Date.valueOf(finalHorseDto.birthdate()));
-            stmt.setString(4, finalHorseDto.gender());
-            stmt.setString(5, finalHorseDto.owner());
+            setValues(finalHorseDto, stmt);
             log.debug(stmt.toString());
             return stmt;
         }, keyHolder);
@@ -73,22 +66,28 @@ public class HorseJdbcDao implements HorseDao {
     public void updateHorse(HorseDto horseDto){
         log.trace("updateHorse()" + horseDto.id());
         final String sql = "UPDATE " + TABLE_NAME +
-                " SET "+ "name=? " + ", description=? " +", birthdate=? " +", gender=? " +", owner=? " +
+                " SET "+ "name=? " + ", description=? " +", birthdate=? " +", gender=? " +", owner=? " + ", mom=? " + ", dad=? " +
                 " WHERE id=?;";
 
         int i = jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, horseDto.name());
-            stmt.setString(2, horseDto.description());
-            stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
-            stmt.setString(4, horseDto.gender());
-            stmt.setString(5, horseDto.owner());
+            setValues(horseDto, stmt);
             stmt.setLong(6, horseDto.id());
             log.debug(stmt.toString());
             return stmt;
         });
         if (i == 0) throw new NotFoundException("horse does not exist yet");
         log.debug("horse changes are saved");
+    }
+
+    private void setValues(HorseDto horseDto, PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, horseDto.name());
+        stmt.setString(2, horseDto.description());
+        stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
+        stmt.setString(4, horseDto.gender());
+        stmt.setString(5, horseDto.owner());
+        stmt.setLong(6, horseDto.mom());
+        stmt.setLong(7, horseDto.dad());
     }
 
     @Override
@@ -143,6 +142,8 @@ public class HorseJdbcDao implements HorseDao {
         horse.setBirthdate(result.getDate("birthdate"));
         horse.setGender(result.getString("gender"));
         horse.setOwner(result.getString("owner"));
+        horse.setMom(result.getLong("mom"));
+        horse.setDad(result.getLong("dad"));
         return horse;
     }
 }

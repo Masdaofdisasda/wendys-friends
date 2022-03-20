@@ -6,6 +6,6 @@ import java.time.LocalDate;
  * Class for Horse DTOs
  * Contains all common properties
  */
-public record HorseDto(Long id, String name, String description, LocalDate birthdate, String gender, String owner ) {
+public record HorseDto(Long id, String name, String description, LocalDate birthdate, String gender, String owner , Long mom , Long dad ) {
 
 }

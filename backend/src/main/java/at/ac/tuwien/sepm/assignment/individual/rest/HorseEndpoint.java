@@ -54,9 +54,11 @@ public class HorseEndpoint {
     public Stream<HorseDto> getFemaleHorse(@PathVariable("searchname") String searchText){
         log.info("GET" + "/horses/f" + "/{}", searchText);
         try {
-            return service.getFemaleHorse(searchText).stream().map(mapper::entityToDto);
+            return service.getFemaleHorse(searchText).stream().limit(5).map(mapper::entityToDto);
         } catch (NotFoundException e) {
             throw handleException(e,"getFemaleHorse()" + searchText);
+        } catch (ValidationException e){
+            throw handleException(e, "getFemaleHorse()" + searchText);
         }
 
     }
@@ -65,9 +67,11 @@ public class HorseEndpoint {
     public Stream<HorseDto> getMaleHorse(@PathVariable("searchname") String searchText){
         log.info("GET" + "/horses/m" + "/{}", searchText);
         try {
-            return service.getMaleHorse(searchText).stream().map(mapper::entityToDto);
+            return service.getMaleHorse(searchText).stream().limit(5).map(mapper::entityToDto);
         } catch (NotFoundException e) {
             throw handleException(e,"getMaleHorse()" + searchText);
+        } catch (ValidationException e){
+            throw handleException(e, "getMaleHorse()" + searchText);
         }
 
     }

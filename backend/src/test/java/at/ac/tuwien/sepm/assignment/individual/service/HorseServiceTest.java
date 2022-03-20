@@ -38,7 +38,8 @@ public class HorseServiceTest {
 
   @Test
   public void saveHorseCanSaveHorse(){
-    HorseDto horseDto = new HorseDto(1L, "Horsy", "is a horse", LocalDate.of(2020, 7, 24), "f", "John Marston");
+    HorseDto horseDto = new HorseDto(1L, "Horsy", "is a horse", LocalDate.of(2020, 7, 24), "f", "John Marston",
+            -1L, -2L);
     horseService.save(horseDto);
 
     List<Horse> horses = null;
@@ -58,14 +59,20 @@ public class HorseServiceTest {
 
   @Test
   public void saveHorseReturnsException(){
-    HorseDto horseDto1 = new HorseDto(1L, "", "is a horse1", LocalDate.of(2020, 7, 24), "f", "John Marston");
-    HorseDto horseDto2 = new HorseDto(2L, "horse2", "is a horse2", LocalDate.of(2030, 7, 24), "f", "John Marston");
-    HorseDto horseDto3 = new HorseDto(3L, "horse3", "is a horse3", LocalDate.of(2020, 7, 24), "", "John Marston");
+    HorseDto horseDto1 = new HorseDto(1L, "", "is a horse1", LocalDate.of(2020, 7, 24), "f", "John Marston",
+            null, -2L);
+    HorseDto horseDto2 = new HorseDto(2L, "horse2", "is a horse2", LocalDate.of(2030, 7, 24), "f", "John Marston",
+            -1L, null);
+    HorseDto horseDto3 = new HorseDto(3L, "horse3", "is a horse3", LocalDate.of(2020, 7, 24), "", "John Marston",
+            null, -2L);
+    HorseDto horseDto4 = new HorseDto(3L, "horse4", "is a horse3", LocalDate.of(2020, 7, 24), "", "John Marston",
+            -1L, null);
 
     Assertions.assertThrows(ValidationException.class, ()->{
       horseService.save(horseDto1);
       horseService.save(horseDto2);
       horseService.save(horseDto3);
+      horseService.save(horseDto4);
     });
   }
 

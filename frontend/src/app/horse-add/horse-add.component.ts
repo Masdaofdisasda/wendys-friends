@@ -12,6 +12,8 @@ import {HorseService} from '../service/horse.service';
 export class HorseAddComponent implements OnInit {
   active = false;
   horses: Horse[];
+  chosenMom?: number;
+  chosenDad?: number;
 
   constructor(
     private service: HorseService,
@@ -20,8 +22,9 @@ export class HorseAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  add(name: string, description: string, birthdate: Date, gender: string, owner: string): void {
-    this.service.addHorse({name, description, birthdate, gender, owner} as Horse).subscribe(horse => {this.horses.push(horse);});
+  add(name: string, description: string, birthdate: Date, gender: string, owner: string, mom: number, dad: number): void {
+    this.service.addHorse({name, description, birthdate, gender, owner, mom, dad} as Horse)
+      .subscribe(horse => {this.horses.push(horse);});
   }
 
   searchMom = (text$: Observable<string>) => text$.pipe(
@@ -49,9 +52,20 @@ export class HorseAddComponent implements OnInit {
    * Initially binds the string value and then after selecting
    * an item by checking either for string or key/value object.
    */
-  inputFormatBandListValue(value: any)   {
+  inputFormatMom(value: any)   {
     if(value.name)
-      {return value.name;}
+    { this.chosenMom = value.id;
+      return value.name;}
+    return value;
+  }
+  /**
+   * Initially binds the string value and then after selecting
+   * an item by checking either for string or key/value object.
+   */
+  inputFormatDad(value: any)   {
+    if(value.name)
+    { this.chosenDad = value.id;
+      return value.name;}
     return value;
   }
 
