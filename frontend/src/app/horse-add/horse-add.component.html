@@ -1,13 +1,13 @@
 <div *ngIf="active">
   <div>
     <label for="new-horse-name">name: </label>
-    <input id="new-horse-name" #horseName />
+    <input id="new-horse-name" #horseName placeholder="required"/>
 
     <label for="new-horse-desc">description: </label>
-    <input id="new-horse-desc" #horseDesc />
+    <input id="new-horse-desc" #horseDesc placeholder="optional"/>
 
     <label for="new-horse-date">birhtdate: </label>
-    <input type="date" id="new-horse-date" #horseDate />
+    <input type="date" id="new-horse-date" #horseDate placeholder="required"/>
 
     <label for="new-horse-gender">gender: </label>
     <select name="demo" #horseSex>
@@ -16,7 +16,31 @@
     </select>
 
     <label for="new-horse-owner">owner: </label>
-    <input id="new-horse-owner" #horseOwner />
+    <input id="new-horse-owner" #horseOwner placeholder="optional"/>
+
+    <label for="new-horse-mom">mother: </label>
+    <input id="new-horse-mom" type="text"
+           name="horseMom"
+           class="form-control"
+           [ngbTypeahead]="searchMom"
+           [resultFormatter]="resultFormatBandListValue"
+           [inputFormatter]="inputFormatBandListValue"
+           #instance="ngbTypeahead"
+           #horseMom
+           placeholder="optional"
+    />
+
+    <label for="new-horse-dad">father: </label>
+    <input id="new-horse-dad" type="text"
+           name="horseDad"
+           class="form-control"
+           [ngbTypeahead]="searchDad"
+           [resultFormatter]="resultFormatBandListValue"
+           [inputFormatter]="inputFormatBandListValue"
+           #instance="ngbTypeahead"
+           #horseDad
+           placeholder="optional"
+    />
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=

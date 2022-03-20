@@ -16,7 +16,7 @@ public interface HorseDao {
      * Get all horses stored in the persistent data store.
      * @return a list of all stored horses
      */
-    List<Horse> getAll() throws PersistenceException;
+    List<Horse> getAll();
 
     /**
      * Find a single horse according to its id
@@ -24,7 +24,7 @@ public interface HorseDao {
      * @return a Horse with the id
      * @throws NotFoundException if the horse could not be found
      */
-    Horse getOneById(Long id) throws NotFoundException;
+    Horse getOneById(Long id);
 
     /**
      * saves a new horse dataset in the database
@@ -44,6 +44,20 @@ public interface HorseDao {
      * deletes horse entry
      * @param id of horse to be deleted
      */
-    public void deleteHorse(Long id);
+    void deleteHorse(Long id);
+
+    /**
+     * searches female horses matching searchText
+     * @param searchText text to match
+     * @return list of matching horses
+     */
+    List<Horse> getFemaleHorse(String searchText);
+
+    /**
+     * searches male horses matching searchText
+     * @param searchText text to match
+     * @return list of matching horses
+     */
+    List<Horse> getMaleHorse(String searchText);
 
 }

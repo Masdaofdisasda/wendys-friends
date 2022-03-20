@@ -49,9 +49,9 @@ public class HorseEndpointTest {
     List<HorseDto> horseResult = objectMapper.readerFor(HorseDto.class).<HorseDto>readValues(body).readAll();
 
     assertThat(horseResult).isNotNull();
-    assertThat(horseResult.size()).isEqualTo(2);
-    assertThat(horseResult.get(0).id()).isEqualTo(-1);
-    assertThat(horseResult.get(0).name()).isEqualTo("Wendy");
+    assertThat(horseResult.size()).isEqualTo(11);
+    assertThat(horseResult.get(0).id()).isEqualTo(-10);
+    assertThat(horseResult.get(0).name()).isEqualTo("Lad");
   }
 
   @Test
@@ -60,5 +60,23 @@ public class HorseEndpointTest {
         .perform(MockMvcRequestBuilders
             .get("/asdf123")
         ).andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void getMaleHorsesReturnsHorses() throws Exception {
+
+    byte[] body = mockMvc
+            .perform(MockMvcRequestBuilders
+                    .get("/horses/f/Wendy")
+                    .accept(MediaType.APPLICATION_JSON)
+            ).andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsByteArray();
+
+    List<HorseDto> horseResult = objectMapper.readerFor(HorseDto.class).<HorseDto>readValues(body).readAll();
+
+    assertThat(horseResult).isNotNull();
+    assertThat(horseResult.size()).isEqualTo(1);
+    assertThat(horseResult.get(0).id()).isEqualTo(-1);
+    assertThat(horseResult.get(0).name()).isEqualTo("Wendy");
   }
 }

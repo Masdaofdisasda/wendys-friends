@@ -48,8 +48,15 @@ export class HorseService {
 
   deleteHorse(id: number): Observable<Horse>{
     return this.http.delete<Horse>(baseUri + '/' + id, this.httpOptions).pipe(
-      catchError(this.handleError<Horse>('deleteHero'))
+      catchError(this.handleError<Horse>('deleteHorse'))
     );
+  }
+
+  horseLookupMom(searchText: string): Observable<Horse[]>{
+    return this.http.get<Horse[]>(baseUri + '/' + 'f' + '/' + searchText);
+  }
+  horseLookupDad(searchText: string): Observable<Horse[]>{
+    return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText);
   }
 
   /**

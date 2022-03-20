@@ -35,9 +35,8 @@ public class HorseEndpoint {
         try {
             return service.allHorses().stream()
                     .map(mapper::entityToDto);
-        } catch (PersistenceException e) {
-            log.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage() );
+        } catch (NotFoundException e) {
+            throw handleException(e,"allHorses()");
         }
     }
 
@@ -49,6 +48,28 @@ public class HorseEndpoint {
         } catch (Exception e) {
             throw handleException(e, "getOneByID()" + id);
         }
+    }
+
+    @GetMapping(value = "/f/{searchname}")
+    public Stream<HorseDto> getFemaleHorse(@PathVariable("searchname") String searchText){
+        log.info("GET" + "/horses/f" + "/{}", searchText);
+        try {
+            return service.getFemaleHorse(searchText).stream().map(mapper::entityToDto);
+        } catch (NotFoundException e) {
+            throw handleException(e,"getFemaleHorse()" + searchText);
+        }
+
+    }
+
+    @GetMapping(value = "/m/{searchname}")
+    public Stream<HorseDto> getMaleHorse(@PathVariable("searchname") String searchText){
+        log.info("GET" + "/horses/m" + "/{}", searchText);
+        try {
+            return service.getMaleHorse(searchText).stream().map(mapper::entityToDto);
+        } catch (NotFoundException e) {
+            throw handleException(e,"getMaleHorse()" + searchText);
+        }
+
     }
 
     @PostMapping

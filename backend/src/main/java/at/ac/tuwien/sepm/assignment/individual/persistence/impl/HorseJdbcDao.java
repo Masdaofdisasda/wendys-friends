@@ -32,13 +32,9 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public List<Horse> getAll() throws PersistenceException {
+    public List<Horse> getAll() {
         log.trace("get all horses");
-        try {
-            return jdbcTemplate.query(SQL_SELECT_ALL, this::mapRow);
-        } catch (DataAccessException e) {
-            throw new PersistenceException("Could not query all horses", e);
-        }
+        return jdbcTemplate.query(SQL_SELECT_ALL, this::mapRow);
     }
 
     @Override
@@ -108,6 +104,34 @@ public class HorseJdbcDao implements HorseDao {
         });
         if (i == 0) throw new NotFoundException("horse does not exist");
         log.debug("horse was deleted");
+    }
+
+    @Override
+    public List<Horse> getFemaleHorse(String searchText){
+        log.trace("getFemaleHorse()",searchText);
+        final String sql = "SELECT * FROM "+ TABLE_NAME +" WHERE GENDER='f' AND NAME like ?";
+        List<Horse> horses = jdbcTemplate.query(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, "%"+searchText+"%");
+            log.debug(stmt.toString());
+            return stmt;
+        }, this::mapRow);
+        log.debug("female horse(s) were found");
+        return horses;
+    }
+
+    @Override
+    public List<Horse> getMaleHorse(String searchText){
+        log.trace("getFemaleHorse()",searchText);
+        final String sql = "SELECT * FROM "+ TABLE_NAME +" WHERE GENDER='m' AND NAME like ?";
+        List<Horse> horses = jdbcTemplate.query(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, "%"+searchText+"%");
+            log.debug(stmt.toString());
+            return stmt;
+        }, this::mapRow);
+        log.debug("male horse(s) were found");
+        return horses;
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {

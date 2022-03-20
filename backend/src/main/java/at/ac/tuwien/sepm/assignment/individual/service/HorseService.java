@@ -18,7 +18,7 @@ public interface HorseService {
      * Lists all horses stored in the system.
      * @return list of all stored horses
      */
-    List<Horse> allHorses() throws PersistenceException;
+    List<Horse> allHorses();
 
     /**
      * forwards request to get a single horse to persistence
@@ -49,5 +49,19 @@ public interface HorseService {
      * @throws NotFoundException if horse does not exist in database.
      * */
     void deleteHorse(Long id);
+
+    /**
+     * look for female horses with names matching searchText
+     * @param searchText matching term
+     * @return all horses matching searchText
+     */
+    List<Horse> getFemaleHorse(String searchText);
+
+    /**
+     * look for male horses with names matching searchText
+     * @param searchText matching term
+     * @return all horses matching searchText
+     */
+    List<Horse> getMaleHorse(String searchText);
 
 }

@@ -6,7 +6,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import java.time.LocalDate;
 import java.util.List;
 
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,12 +28,12 @@ public class HorseServiceTest {
     List<Horse> horses = null;
     try {
       horses = horseService.allHorses();
-    } catch (PersistenceException e) {
+    } catch (NotFoundException e) {
       e.printStackTrace();
     }
-    assertThat(horses.size()).isEqualTo(2);
-    assertThat(horses.get(0).getId()).isEqualTo(-1);
-    assertThat(horses.get(0).getName()).isEqualTo("Wendy");
+    assertThat(horses.size()).isEqualTo(11);
+    assertThat(horses.get(0).getId()).isEqualTo(-10);
+    assertThat(horses.get(0).getName()).isEqualTo("Lad");
   }
 
   @Test
@@ -44,16 +44,16 @@ public class HorseServiceTest {
     List<Horse> horses = null;
     try {
       horses = horseService.allHorses();
-    } catch (PersistenceException e) {
+    } catch (NotFoundException e) {
       e.printStackTrace();
     }
-    assertThat(horses.size()).isEqualTo(2);
-    assertThat(horses.get(1).getId()).isEqualTo(1);
-    assertThat(horses.get(1).getName()).isEqualTo("Horsy");
-    assertThat(horses.get(1).getDescription()).isEqualTo("is a horse");
-    assertThat(horses.get(1).getBirthdate()).isEqualTo(LocalDate.of(2020, 7, 24));
-    assertThat(horses.get(1).getGender()).isEqualTo("f");
-    assertThat(horses.get(1).getOwner()).isEqualTo("John Marston");
+    assertThat(horses.size()).isEqualTo(11);
+    assertThat(horses.get(10).getId()).isEqualTo(1);
+    assertThat(horses.get(10).getName()).isEqualTo("Horsy");
+    assertThat(horses.get(10).getDescription()).isEqualTo("is a horse");
+    assertThat(horses.get(10).getBirthdate()).isEqualTo(LocalDate.of(2020, 7, 24));
+    assertThat(horses.get(10).getGender()).isEqualTo("f");
+    assertThat(horses.get(10).getOwner()).isEqualTo("John Marston");
   }
 
   @Test
@@ -67,7 +67,18 @@ public class HorseServiceTest {
       horseService.save(horseDto2);
       horseService.save(horseDto3);
     });
-
   }
 
+  @Test
+  public void getFemaleHorseReturnsHorse(){
+
+    List<Horse> horses = null;
+    try {
+      horses = horseService.getFemaleHorse("end");
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+    }
+    assertThat(horses.get(0).getId()).isEqualTo(-1);
+    assertThat(horses.get(0).getName()).isEqualTo("Wendy");
+  }
 }

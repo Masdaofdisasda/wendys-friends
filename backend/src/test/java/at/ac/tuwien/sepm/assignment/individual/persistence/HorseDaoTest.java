@@ -21,8 +21,8 @@ public class HorseDaoTest {
   @Test
   public void getAllReturnsAllStoredHorses() throws PersistenceException {
     List<Horse> horses = horseDao.getAll();
-    assertThat(horses.size()).isEqualTo(1);
-    assertThat(horses.get(0).getId()).isEqualTo(-1);
-    assertThat(horses.get(0).getName()).isEqualTo("Wendy");
+    assertThat(horses.size()).isEqualTo(10);
+    assertThat(horses.get(0).getId()).isEqualTo(-10);
+    assertThat(horses.get(0).getName()).isEqualTo("Lad");
   }
 }
