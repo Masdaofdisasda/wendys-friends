@@ -79,7 +79,6 @@ public class HorseServiceImpl implements HorseService {
     public void deleteHorse(Long id){
         log.trace("deleteHorse", id);
         try {
-            validator.validateDeleteHorse(id);
             dao.deleteHorse(id);
         } catch (Exception e) {
             e.printStackTrace(); //TODo
@@ -90,6 +89,7 @@ public class HorseServiceImpl implements HorseService {
     public List<Horse> getFemaleHorse(String searchText){
         log.trace("getFemaleHorse()", searchText);
         validator.validateSearchText(searchText);
+        log.debug("search text is valid");
         try {
             return dao.getFemaleHorse(searchText);
         } catch (DataAccessException e) {
@@ -101,9 +101,26 @@ public class HorseServiceImpl implements HorseService {
     public List<Horse> getMaleHorse(String searchText){
         log.trace("getMaleHorse()", searchText);
         validator.validateSearchText(searchText);
+        log.debug("search text is valid");
         try {
             return dao.getMaleHorse(searchText);
         } catch (DataAccessException e) {
+            throw new NotFoundException(e);
+        }
+    }
+
+    @Override
+    public List<Horse> searchHorse(HorseDto horseDto){
+        log.trace("searchHorse()", horseDto);
+        if (validator.isEmpty(horseDto)){
+            log.debug("empty search - return all");
+            return allHorses();
+        }
+        validator.validateSearchHorse(horseDto);
+        log.debug("valid search");
+        try {
+            return dao.searchHorse(horseDto);
+        } catch (DataAccessException e){
             throw new NotFoundException(e);
         }
     }

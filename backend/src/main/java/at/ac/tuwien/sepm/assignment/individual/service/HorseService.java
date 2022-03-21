@@ -64,4 +64,12 @@ public interface HorseService {
      */
     List<Horse> getMaleHorse(String searchText);
 
+    /**
+     * looks for matching horses and return all horses in db if fields are empty
+     * @param horseDto search parameters
+     * @return list of matching horses
+     * @throws NotFoundException if no matching horse was found
+     */
+    List<Horse> searchHorse(HorseDto horseDto) throws NotFoundException;
+
 }

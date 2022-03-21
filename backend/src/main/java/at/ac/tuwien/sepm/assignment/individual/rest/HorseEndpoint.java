@@ -76,6 +76,17 @@ public class HorseEndpoint {
 
     }
 
+    @GetMapping(value = "/search")
+    public Stream<HorseDto> searchHorse(@RequestBody final HorseDto horseDto){
+        log.info("GET"+"/search", horseDto);
+        try {
+            return service.searchHorse(horseDto).stream()
+                    .map(mapper::entityToDto);
+        }catch (NotFoundException e){
+            throw handleException(e, "searchHorse()" + horseDto);
+        }
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createHorse(@RequestBody final HorseDto horseDto) {

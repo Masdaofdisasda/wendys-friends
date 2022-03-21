@@ -63,4 +63,16 @@ public class Validator {
         if (searchText.isEmpty() || searchText.isEmpty())
             throw new ValidationException("search text is empty");
     }
+
+    public boolean isEmpty(HorseDto horseDto){
+        if (horseDto.name().isEmpty()){
+            return true; //TODO
+        }
+        return false;
+    }
+
+    public void validateSearchHorse(HorseDto horseDto){
+        if (horseDto.birthdate().isAfter(java.time.LocalDate.now()))
+            throw new ValidationException("Impossible birthdate");
+    }
 }

@@ -5,6 +5,6 @@ export interface Horse {
   birthdate: Date;
   gender: string;
   owner: string;
-  mom: number;
-  dad: number;
+  mom?: number;
+  dad?: number;
 }

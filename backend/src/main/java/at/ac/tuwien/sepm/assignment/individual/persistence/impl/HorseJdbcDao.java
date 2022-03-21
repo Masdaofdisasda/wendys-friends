@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository("HorseJdbcDao")
@@ -145,6 +146,43 @@ public class HorseJdbcDao implements HorseDao {
         }, this::mapRow);
         log.debug("male horse(s) were found");
         return horses;
+    }
+
+    @Override
+    public List<Horse> searchHorse(HorseDto horseDto){
+        log.trace("searchHorse()", horseDto);
+        final String and = " AND ";
+        final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE" +
+                " UPPER(NAME) LIKE ?" + and + "UPPER(DESCRIPTION) LIKE ?" + and +
+                "BIRTHDATE <= NOW() - ?" + and + "GENDER LIKE ?" + and +
+                "OWNER LIKE ?;";
+        List<Horse> horses = jdbcTemplate.query(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            if (horseDto.name() != null){
+                stmt.setString(1, "%"+horseDto.name().toUpperCase()+"%");
+            } else stmt.setString(1, "%");
+
+            if (horseDto.description() != null){
+                stmt.setString(2, "%"+horseDto.description().toUpperCase()+"%");
+            }else stmt.setString(2, "%");
+
+            if (horseDto.birthdate() != null){
+                stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
+            } else stmt.setDate(3, Date.valueOf(LocalDate.now()));
+
+            if (horseDto.gender() != null){
+                stmt.setString(4, horseDto.gender());
+            } else stmt.setString(4, "%");
+
+            if (horseDto.owner() != null){
+                stmt.setString(5, "%"+horseDto.owner().toUpperCase()+"%");
+            } stmt.setString(5, "%");
+            log.debug(stmt.toString());
+            return stmt;
+        }, this::mapRow);
+        log.debug("search could be performed");
+        return horses;
+
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {

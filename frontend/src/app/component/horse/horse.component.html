@@ -1,7 +1,10 @@
+
 <div class="flex-horizontal full-width mt-3">
   <button class="btn btn-light mr-1" (click)="reloadHorses()">&#x21bb;</button>
 </div>
-
+<div class="flex-horizontal full-width mt-3">
+  <button class="btn btn-light mr-1" [routerLink]="['/search']">search horses</button>
+</div>
 
 <app-horse-add></app-horse-add>
 

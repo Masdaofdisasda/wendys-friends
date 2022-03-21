@@ -59,6 +59,10 @@ export class HorseService {
     return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText);
   }
 
+  searchHorse(horse: Horse): Observable<Horse[]>{
+    return this.http.get<Horse[]>(baseUri + '/' + 'search');
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
