@@ -1,0 +1,34 @@
+<div>
+  <div>
+    <h2>search Horses</h2>
+    <form #userForm="ngForm"  novalidate>
+
+
+      <label for="horse-name">Name: </label>
+      <input id="horse-name" #horseName placeholder="Enter name"/>
+
+      <label for="horse-desc">description: </label>
+      <input id="horse-desc" #horseDesc placeholder="Enter description"/>
+
+      <label for="horse-date">Birhtdate: </label>
+      <input type="date" id="horse-date" #horseDate placeholder="required"/>
+
+      <label for="horse-gender">Gender: </label>
+      <select name="demo" #horseSex>
+        <option selected="selected" id="horse-gender" value=null></option>
+        <option value="m">male</option>
+        <option value="f">female</option>
+      </select>
+
+      <label for="horse-owner">Owner: </label>
+      <input id="horse-owner" #horseOwner placeholder="Enter owner"/>
+
+      <button (click)="searchHorse(horseName, horseDesc, horseDate, horseSex, horseOwner)"  class="btn btn-dark" type="submit">Search horse</button>
+    </form>
+  </div>
+
+  <div>
+    <div *ngFor="let horse of horses">
+    </div>
+  </div>
+</div>
