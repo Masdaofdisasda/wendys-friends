@@ -43,7 +43,7 @@ export class HorseService {
   }
 
   getHorse(id: number): Observable<Horse> {
-    return this.http.get<Horse>('horses' + '/' + id);
+    return this.http.get<Horse>(baseUri + '/' + id);
   }
 
   deleteHorse(id: number): Observable<Horse>{

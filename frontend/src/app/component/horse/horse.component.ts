@@ -10,7 +10,6 @@ import {HorseService} from 'src/app/service/horse.service';
 export class HorseComponent implements OnInit {
   search = false;
   horses: Horse[];
-  selectedHorseView?: Horse;
   selectedHorseEdit?: Horse;
   selectedHorseDelete?: Horse;
   error: string = null;
@@ -21,10 +20,6 @@ export class HorseComponent implements OnInit {
 
   ngOnInit(): void {
     this.reloadHorses();
-  }
-
-  onSelectView(horse: Horse): void {
-    this.selectedHorseView = horse;
   }
 
   onSelectEdit(horse: Horse): void {

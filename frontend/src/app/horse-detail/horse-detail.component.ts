@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {map, switchMap} from 'rxjs/operators';
 
 import {Horse} from '../dto/horse';
 import {HorseService} from '../service/horse.service';
@@ -11,7 +11,11 @@ import {HorseService} from '../service/horse.service';
   styleUrls: ['./horse-detail.component.scss']
 })
 export class HorseDetailComponent implements OnInit {
-  @Input() horse: Horse;
+  horse: Horse ;
+  mom?: Horse;
+  dad?: Horse;
+  selectedHorseEdit?: Horse;
+  selectedHorseDelete?: Horse;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,11 +23,34 @@ export class HorseDetailComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.getHorse();
   }
 
-  getHorse(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.service.getHorse(id).subscribe(horse => this.horse = horse);
+  getHorse(): void{
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        const id = +params.get('id');
+        return this.service.getHorse(id);
+      }),
+      map(horse => this.horse = horse)
+    ).subscribe(horse => {
+      if (horse.mom) {
+        this.service.getHorse(this.horse.mom).subscribe(mom => this.mom = mom);
+      }
+      if (horse.dad) {
+        this.service.getHorse(this.horse.dad).subscribe(dad => this.dad = dad);
+      }
+    });
+
   }
+
+  onSelectEdit(horse: Horse): void {
+    this.selectedHorseEdit = horse;
+  }
+
+  onSelectDelete(horse: Horse): void {
+    this.selectedHorseDelete = horse;
+  }
+
 
 }

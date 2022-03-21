@@ -79,4 +79,6 @@ public class HorseEndpointTest {
     assertThat(horseResult.get(0).id()).isEqualTo(-1);
     assertThat(horseResult.get(0).name()).isEqualTo("Wendy");
   }
+
+
 }

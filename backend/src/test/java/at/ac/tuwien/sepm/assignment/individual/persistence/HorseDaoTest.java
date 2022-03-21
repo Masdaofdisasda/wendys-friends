@@ -19,10 +19,22 @@ public class HorseDaoTest {
   HorseDao horseDao;
 
   @Test
-  public void getAllReturnsAllStoredHorses() throws PersistenceException {
+  public void getAllReturnsAllStoredHorses() {
     List<Horse> horses = horseDao.getAll();
     assertThat(horses.size()).isEqualTo(10);
     assertThat(horses.get(0).getId()).isEqualTo(-10);
     assertThat(horses.get(0).getName()).isEqualTo("Lad");
+  }
+
+  @Test
+  public void getOneByIdReturnsAllDataFields(){
+    Horse horse = horseDao.getOneById(-9L);
+    assertThat(horse.getName()).isEqualTo("Shamin");
+    assertThat(horse.getDescription()).isEqualTo("horse test 9");
+    assertThat(horse.getBirthdate()).isEqualTo("2009-01-01");
+    assertThat(horse.getGender()).isEqualTo("m");
+    assertThat(horse.getOwner()).isEqualTo("sql");
+    assertThat(horse.getMom()).isEqualTo(-1);
+    assertThat(horse.getDad()).isEqualTo(-2);
   }
 }

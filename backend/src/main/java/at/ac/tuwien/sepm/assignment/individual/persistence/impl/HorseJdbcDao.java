@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.List;
 
@@ -39,7 +40,12 @@ public class HorseJdbcDao implements HorseDao {
         log.trace("Get horse with id {}", id);
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
-        List<Horse> horses = jdbcTemplate.query(sql, this::mapRow, id);
+        List<Horse> horses = jdbcTemplate.query(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setLong(1, id);
+            log.debug(stmt.toString());
+            return stmt;
+        }, this::mapRow);
         if (horses.isEmpty()) throw new NotFoundException("Could not find owner with id" + id);
         log.debug("horse found");
         return horses.get(0);
@@ -53,8 +59,8 @@ public class HorseJdbcDao implements HorseDao {
                 " VALUES (?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         HorseDto finalHorseDto = horseDto;
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        jdbcTemplate.update(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             setValues(finalHorseDto, stmt);
             log.debug(stmt.toString());
             return stmt;
@@ -69,8 +75,8 @@ public class HorseJdbcDao implements HorseDao {
                 " SET "+ "name=? " + ", description=? " +", birthdate=? " +", gender=? " +", owner=? " + ", mom=? " + ", dad=? " +
                 " WHERE id=?;";
 
-        int i = jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+        int i = jdbcTemplate.update(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
             setValues(horseDto, stmt);
             stmt.setLong(8, horseDto.id());
             log.debug(stmt.toString() + horseDto.id());

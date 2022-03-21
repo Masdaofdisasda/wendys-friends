@@ -6,8 +6,7 @@ import { HorseDetailComponent} from './horse-detail/horse-detail.component';
 const routes: Routes = [
   {path: '', redirectTo: 'horses', pathMatch: 'full'},
   {path: 'horses', component: HorseComponent},
-  {path: '**', redirectTo: 'horses'},
-  //{path: 'horses/:id', component: HorseDetailComponent },
+  {path: 'horse/:id', component: HorseDetailComponent },
 ];
 
 @NgModule({

@@ -15,14 +15,20 @@ export class HorseUpdateComponent implements OnInit {
   success = false;
   selectedMom?: Horse;
   selectedDad?: Horse;
-  momName: string = 'no mother'; //TODO
-  dadName: string = 'no father';
+  mom?: Horse;
+  dad?: Horse;
 
   constructor(
     private service: HorseService,
   ) { }
 
   ngOnInit(): void {
+    if (this.horse.mom) {
+      this.service.getHorse(this.horse.mom).subscribe(mom => this.mom = mom);
+    }
+    if (this.horse.dad) {
+      this.service.getHorse(this.horse.dad).subscribe(dad => this.dad = dad);
+    }
   }
 
   update(id: number, name: string, description: string, birthdate: Date, gender: string, owner: string, mom: number, dad: number): void {

@@ -5,8 +5,6 @@
 
 <app-horse-add></app-horse-add>
 
-<app-horse-detail [horse]="selectedHorseView"></app-horse-detail>
-
 <app-horse-update [horse]="selectedHorseEdit"></app-horse-update>
 
 <app-horse-delete [horse]="selectedHorseDelete"></app-horse-delete>
@@ -26,10 +24,10 @@
       <th></th>
     </tr>
       <tr *ngFor="let horse of horses">
-          <td><a [class.selected]="horse === selectedHorseView" type="button" (click)="onSelectView(horse)"> {{horse.name}}</a></td>
+          <td>{{horse.name}}</td>
           <td>{{horse.birthdate}}</td>
           <td>{{horse.gender}}</td>
-        <td><a [class.selected]="horse === selectedHorseView" type="button" (click)="onSelectView(horse)"> view</a></td>
+        <td><a [routerLink]="['/horse', horse.id]" >view</a></td>
         <td><a [class.selected]="horse === selectedHorseEdit" type="button" (click)="onSelectEdit(horse)"> edit</a></td>
         <td><a [class.selected]="horse === selectedHorseDelete" type="button" (click)="onSelectDelete(horse)"> delete</a></td>
       </tr>

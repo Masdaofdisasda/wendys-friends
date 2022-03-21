@@ -29,7 +29,7 @@
            [resultFormatter]="resultFormatBandListValue"
            [inputFormatter]="inputFormatMom"
            #instance="ngbTypeahead"
-           placeholder="{{momName}} - leave blank to delete mother"
+           placeholder="{{mom?.name}} (leave blank to delete mother)"
     />
 
     <label for="new-horse-dad">father: </label>
@@ -41,7 +41,7 @@
            [resultFormatter]="resultFormatBandListValue"
            [inputFormatter]="inputFormatDad"
            #instance="ngbTypeahead"
-           placeholder="{{dadName}} - leave blank to delete to delete father"
+           placeholder="{{dad?.name}} (leave blank to delete father)"
     />
 
     <!-- (click) passes input value to add() and then clears the input -->

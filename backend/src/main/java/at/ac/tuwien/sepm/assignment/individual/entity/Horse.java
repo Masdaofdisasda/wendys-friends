@@ -64,10 +64,10 @@ public class Horse {
 
     public Long getMom(){return mom;}
 
-    public void setMom( Long owner){this.mom = mom;}
+    public void setMom( Long mom){this.mom = mom;}
 
     public Long getDad(){return dad;}
 
-    public void setDad( Long owner){this.dad = dad;}
+    public void setDad( Long dad){this.dad = dad;}
 
 }
