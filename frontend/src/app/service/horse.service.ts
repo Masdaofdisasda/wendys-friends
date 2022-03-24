@@ -60,7 +60,34 @@ export class HorseService {
   }
 
   searchHorse(horse: Horse): Observable<Horse[]>{
-    return this.http.get<Horse[]>(baseUri + '/' + 'search');
+    let uri = baseUri + '/search?';
+    let addAnd = false;
+
+    if(horse.name!==null){
+      uri=uri+'name='+horse.name;
+      addAnd=true;
+    }
+    if(horse.description!==null){
+      if(addAnd) {uri=uri+'&';}
+      uri=uri+'description='+horse.description;
+      addAnd=true;
+    }
+    //if(horse.birthdate!==null){
+    //  if(addAnd) {uri=uri+'&';}
+    //  uri=uri+'birthdate='+horse.birthdate;
+    //  addAnd=true;
+    //}
+    if(horse.gender!==null){
+      if(addAnd) {uri=uri+'&';}
+      uri=uri+'gender='+horse.gender;
+      addAnd=true;
+    }
+    if(horse.owner!==null){
+      if(addAnd) {uri=uri+'&';}
+      uri=uri+'owner='+horse.owner;
+    }
+
+    return this.http.get<Horse[]>(uri);
   }
 
   /**

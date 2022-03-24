@@ -55,24 +55,26 @@ public class Validator {
         }
     }
 
-    public void validateDeleteHorse(Long id){
-        //TODO
-    }
-
     public void validateSearchText(String searchText){
         if (searchText.isEmpty() || searchText.isEmpty())
             throw new ValidationException("search text is empty");
     }
 
     public boolean isEmpty(HorseDto horseDto){
-        if (horseDto.name().isEmpty()){
-            return true; //TODO
+        if (horseDto.name() == null &&
+        horseDto.description() == null &&
+        horseDto.birthdate() == null &&
+        horseDto.gender() == null &&
+        horseDto.owner() == null){
+            return true;
         }
         return false;
     }
 
     public void validateSearchHorse(HorseDto horseDto){
-        if (horseDto.birthdate().isAfter(java.time.LocalDate.now()))
-            throw new ValidationException("Impossible birthdate");
+        if (horseDto.birthdate() != null) {
+            if (horseDto.birthdate().isAfter(java.time.LocalDate.now()))
+                throw new ValidationException("Impossible birthdate");
+        }
     }
 }

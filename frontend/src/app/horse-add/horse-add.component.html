@@ -43,16 +43,16 @@
     />
 
     <!-- (click) passes input value to add() and then clears the input -->
-    <button type="button" class="add-button" (click)=
+    <button type="button" class="btn btn-dark mr-1" (click)=
       "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, selectedMom.id, selectedDad.id); horseName.value=''">
       add horse
     </button>
-    <button type="button" class="add-button" (click)="active=false">
+    <button type="button" class="btn btn-light mr-1" (click)="active=false">
       cancel
     </button>
   </div>
 </div>
 
-<div *ngIf="!active"><button type="button" class="add-button" (click)="active = true">
+<div *ngIf="!active"><button type="button" class="btn btn-light mr-1" (click)="active = true">
   add new horse
 </button></div>

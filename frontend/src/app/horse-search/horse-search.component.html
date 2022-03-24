@@ -5,30 +5,59 @@
 
 
       <label for="horse-name">Name: </label>
-      <input id="horse-name" #horseName placeholder="Enter name"/>
+      <input id="horse-name" [(ngModel)]= "name" placeholder="Enter name"/>
 
-      <label for="horse-desc">description: </label>
-      <input id="horse-desc" #horseDesc placeholder="Enter description"/>
+      <label for="horse-desc">Description: </label>
+      <input id="horse-desc" [(ngModel)]= "description" placeholder="Enter description"/>
 
       <label for="horse-date">Birhtdate: </label>
-      <input type="date" id="horse-date" #horseDate placeholder="required"/>
+      <input type="date" id="horse-date" [(ngModel)]= "birthdate" placeholder="required"/>
 
       <label for="horse-gender">Gender: </label>
-      <select name="demo" #horseSex>
+      <select name="demo" [(ngModel)]= "gender">
         <option selected="selected" id="horse-gender" value=null></option>
         <option value="m">male</option>
         <option value="f">female</option>
       </select>
 
       <label for="horse-owner">Owner: </label>
-      <input id="horse-owner" #horseOwner placeholder="Enter owner"/>
+      <input id="horse-owner" [(ngModel)]= "owner" placeholder="Enter owner"/>
 
-      <button (click)="searchHorse(horseName, horseDesc, horseDate, horseSex, horseOwner)"  class="btn btn-dark" type="submit">Search horse</button>
+      <button (click)="searchHorse(name,description,birthdate,gender,owner)"  class="btn btn-dark" type="submit">Search horse</button>
     </form>
   </div>
 
-  <div>
-    <div *ngFor="let horse of horses">
-    </div>
+  <app-horse-update [horse]="selectedHorseEdit"></app-horse-update>
+
+  <app-horse-delete [horse]="selectedHorseDelete"></app-horse-delete>
+
+  <div class="mt-3" *ngIf="horses">
+    <table class="table table-hover">
+      <thead>
+      <th>Search Results</th>
+      </thead>
+      <tbody>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Birthdate</th>
+        <th>Gender</th>
+        <th>Owner</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let horse of horses">
+        <td>{{horse.name}}</td>
+        <td>{{horse.description}}</td>
+        <td>{{horse.birthdate}}</td>
+        <td>{{horse.gender}}</td>
+        <td>{{horse.owner}}</td>
+        <td><a [routerLink]="['/horse', horse.id]" >view</a></td>
+        <td><a [class.selected]="horse === selectedHorseEdit" type="button" (click)="onSelectEdit(horse)"> edit</a></td>
+        <td><a [class.selected]="horse === selectedHorseDelete" type="button" (click)="onSelectDelete(horse)"> delete</a></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

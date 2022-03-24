@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 @RestController
@@ -77,8 +78,18 @@ public class HorseEndpoint {
     }
 
     @GetMapping(value = "/search")
-    public Stream<HorseDto> searchHorse(@RequestBody final HorseDto horseDto){
-        log.info("GET"+"/search", horseDto);
+    public Stream<HorseDto> searchHorse(
+            @RequestParam (value = "name",required = false) String name,
+            @RequestParam (value = "description",required = false) String description,
+            @RequestParam (value = "birthdate",required = false) String birthdate,
+            @RequestParam (value = "gender",required = false) String gender,
+            @RequestParam (value = "owner",required = false) String owner){
+        LocalDate birth;
+        if (birthdate == null){
+            birth = null;
+        }else birth = LocalDate.parse(birthdate);
+        HorseDto horseDto = new HorseDto(0L, name, description, birth, gender, owner, 0L, 0L);
+        log.info("GET"+" /search", horseDto);
         try {
             return service.searchHorse(horseDto).stream()
                     .map(mapper::entityToDto);

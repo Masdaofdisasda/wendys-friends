@@ -154,7 +154,7 @@ public class HorseJdbcDao implements HorseDao {
         final String and = " AND ";
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE" +
                 " UPPER(NAME) LIKE ?" + and + "UPPER(DESCRIPTION) LIKE ?" + and +
-                "BIRTHDATE <= NOW() - ?" + and + "GENDER LIKE ?" + and +
+                "BIRTHDATE <= ?" + and + "GENDER LIKE ?" + and +
                 "OWNER LIKE ?;";
         List<Horse> horses = jdbcTemplate.query(con -> {
             PreparedStatement stmt = con.prepareStatement(sql);
