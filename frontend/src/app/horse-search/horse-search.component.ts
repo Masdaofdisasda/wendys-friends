@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {Horse} from '../dto/horse';
 import {HorseService} from '../service/horse.service';
@@ -9,14 +9,11 @@ import {HorseService} from '../service/horse.service';
   styleUrls: ['./horse-search.component.scss']
 })
 export class HorseSearchComponent implements OnInit {
-  horses: Horse[];
-  name: string = null;
-  description: string = null;
-  birthdate: Date = null;
+  birthdate: Date;
   gender: string = null;
-  owner: string = null;
   selectedHorseEdit?: Horse;
   selectedHorseDelete?: Horse;
+  horses: Horse[];
 
   constructor(
     private service: HorseService,
@@ -26,7 +23,6 @@ export class HorseSearchComponent implements OnInit {
   }
 
   searchHorse(name: string, description: string, birthdate: Date, gender: string, owner: string){
-
     this.service.searchHorse({name, description, birthdate, gender, owner} as Horse)
       .subscribe((horses: Horse[]) => {this.horses = horses;});
   }

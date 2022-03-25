@@ -72,11 +72,12 @@ export class HorseService {
       uri=uri+'description='+horse.description;
       addAnd=true;
     }
-    //if(horse.birthdate!==null){
-    //  if(addAnd) {uri=uri+'&';}
-    //  uri=uri+'birthdate='+horse.birthdate;
-    //  addAnd=true;
-    //}
+    if(horse.birthdate!==null){
+      if(addAnd) {uri=uri+'&';}
+      const date = horse.birthdate.toISOString().substring(0,10);
+      uri=uri+'birthdate='+date;
+      addAnd=true;
+    }
     if(horse.gender!==null){
       if(addAnd) {uri=uri+'&';}
       uri=uri+'gender='+horse.gender;

@@ -1,17 +1,17 @@
 <div>
   <div>
     <h2>search Horses</h2>
-    <form #userForm="ngForm"  novalidate>
+    <form #form="ngForm"  novalidate (ngSubmit)="searchHorse(horseName.value,horseDesc.value,horseDate.valueAsDate,gender,horseOwner.value)">
 
 
       <label for="horse-name">Name: </label>
-      <input id="horse-name" [(ngModel)]= "name" placeholder="Enter name"/>
+      <input id="horse-name" #horseName placeholder="Enter name"/>
 
       <label for="horse-desc">Description: </label>
-      <input id="horse-desc" [(ngModel)]= "description" placeholder="Enter description"/>
+      <input type="text" id="horse-desc" #horseDesc placeholder="Enter description"/>
 
-      <label for="horse-date">Birhtdate: </label>
-      <input type="date" id="horse-date" [(ngModel)]= "birthdate" placeholder="required"/>
+      <label for="horse-date">Birthdate: </label>
+      <input type="date" id="horse-date" #horseDate placeholder="required"/>
 
       <label for="horse-gender">Gender: </label>
       <select name="demo" [(ngModel)]= "gender">
@@ -21,10 +21,11 @@
       </select>
 
       <label for="horse-owner">Owner: </label>
-      <input id="horse-owner" [(ngModel)]= "owner" placeholder="Enter owner"/>
+      <input id="horse-owner" #horseOwner placeholder="Enter owner"/>
 
-      <button (click)="searchHorse(name,description,birthdate,gender,owner)"  class="btn btn-dark" type="submit">Search horse</button>
+      <button class="btn btn-dark" type="submit">Search horse</button>
     </form>
+
   </div>
 
   <app-horse-update [horse]="selectedHorseEdit"></app-horse-update>

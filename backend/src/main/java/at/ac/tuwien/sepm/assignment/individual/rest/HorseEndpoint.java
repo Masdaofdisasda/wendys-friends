@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 
 @RestController
@@ -87,7 +88,10 @@ public class HorseEndpoint {
         LocalDate birth;
         if (birthdate == null){
             birth = null;
-        }else birth = LocalDate.parse(birthdate);
+        }else{
+            DateTimeFormatter format = DateTimeFormatter.ISO_LOCAL_DATE;
+            birth = LocalDate.parse(birthdate, format);
+        }
         HorseDto horseDto = new HorseDto(0L, name, description, birth, gender, owner, 0L, 0L);
         log.info("GET"+" /search", horseDto);
         try {
