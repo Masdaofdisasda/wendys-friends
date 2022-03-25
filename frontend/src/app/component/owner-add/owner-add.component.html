@@ -1,0 +1,25 @@
+<div *ngIf="active">
+  <div>
+    <label for="new-owner-givenname">Givenname: </label>
+    <input id="new-owner-givenname" #ownerSur placeholder="Enter Givenname (required)"/>
+
+    <label for="new-owner-surname">Surname: </label>
+    <input id="new-owner-surname" #ownerGiv placeholder="Enter Surname (required)"/>
+
+    <label for="new-owner-email">Email: </label>
+    <input id="new-owner-email" #ownerEmail placeholder="Enter Email (optional)"/>
+
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button type="button" class="btn btn-dark mr-1" (click)=
+      "add(ownerSur.value, ownerGiv.value, ownerEmail.value)">
+      Add Owner
+    </button>
+    <button type="button" class="btn btn-light mr-1" (click)="active=false">
+      Cancel
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!active"><button type="button" class="btn btn-light mr-1" (click)="active = true">
+  Add new owner
+</button></div>

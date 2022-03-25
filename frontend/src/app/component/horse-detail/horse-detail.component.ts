@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 
-import {Horse} from '../dto/horse';
-import {HorseService} from '../service/horse.service';
+import {Horse} from '../../dto/horse';
+import {HorseService} from '../../service/horse.service';
 
 @Component({
   selector: 'app-horse-detail',

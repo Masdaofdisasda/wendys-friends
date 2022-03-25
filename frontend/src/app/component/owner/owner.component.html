@@ -1,0 +1,25 @@
+<div class="flex-horizontal full-width mt-3">
+  <button class="btn btn-light mr-1" (click)="reloadOwners()">&#x21bb;</button>
+</div>
+
+<app-owner-add></app-owner-add>
+
+<div class="mt-3">
+  <table class="table table-hover">
+    <thead>
+    <th>Owners</th>
+    </thead>
+    <tbody>
+    <tr>
+      <th>Givenname</th>
+      <th>Surname</th>
+      <th>Email</th>
+    </tr>
+    <tr *ngFor="let owner of owners">
+      <td>{{owner.givenname}}</td>
+      <td>{{owner.surname}}</td>
+      <td>{{owner.email}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

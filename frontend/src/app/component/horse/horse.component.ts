@@ -8,7 +8,6 @@ import {HorseService} from 'src/app/service/horse.service';
   styleUrls: ['./horse.component.scss']
 })
 export class HorseComponent implements OnInit {
-  search = false;
   horses: Horse[];
   selectedHorseEdit?: Horse;
   selectedHorseDelete?: Horse;

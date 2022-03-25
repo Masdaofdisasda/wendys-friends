@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
@@ -75,6 +76,19 @@ public class Validator {
         if (horseDto.birthdate() != null) {
             if (horseDto.birthdate().isAfter(java.time.LocalDate.now()))
                 throw new ValidationException("Impossible birthdate");
+        }
+    }
+
+    public void validateSaveOwner(OwnerDto ownerDto){
+        if (ownerDto.givenname() == null || ownerDto.surname() == null || ownerDto.givenname() == "" || ownerDto.surname() == "" ){
+            throw new ValidationException("Name can't be empty");
+        }
+        if (ownerDto.email() != null || ownerDto.email() != ""|| !ownerDto.email().isEmpty()| !ownerDto.email().isBlank()){
+            String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+            if (!ownerDto.email().matches(regex)){
+                //throw new ValidationException("Email address is not valid");
+                //TODO
+            }
         }
     }
 }

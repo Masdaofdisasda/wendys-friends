@@ -9,11 +9,13 @@ import {NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {HorseComponent} from './component/horse/horse.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { HorseDetailComponent } from './horse-detail/horse-detail.component';
-import { HorseUpdateComponent } from './horse-update/horse-update.component';
-import { HorseAddComponent } from './horse-add/horse-add.component';
-import { HorseDeleteComponent } from './horse-delete/horse-delete.component';
-import { HorseSearchComponent } from './horse-search/horse-search.component';
+import { HorseDetailComponent } from './component/horse-detail/horse-detail.component';
+import { HorseUpdateComponent } from './component/horse-update/horse-update.component';
+import { HorseAddComponent } from './component/horse-add/horse-add.component';
+import { HorseDeleteComponent } from './component/horse-delete/horse-delete.component';
+import { HorseSearchComponent } from './component/horse-search/horse-search.component';
+import { OwnerComponent } from './component/owner/owner.component';
+import { OwnerAddComponent } from './component/owner-add/owner-add.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { HorseSearchComponent } from './horse-search/horse-search.component';
     HorseAddComponent,
     HorseDeleteComponent,
     HorseSearchComponent,
+    OwnerComponent,
+    OwnerAddComponent,
   ],
   imports: [
     BrowserModule,

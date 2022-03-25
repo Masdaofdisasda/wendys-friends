@@ -16,3 +16,11 @@ VALUES (-1, 'Wendy', 'horse test 1', '2001-01-01', 'f', 'sql', null, null),
 (-9, 'Shamin', 'horse test 9', '2009-01-01', 'm', 'sql', -1, -2),
 (-10, 'Lad', 'horse test 10', '2010-01-01', 'm', 'sql', -1, -2)
 ;
+
+DELETE FROM owner WHERE id <0;
+
+INSERT INTO owner (id, givenname, surname, email)
+VALUES (-1, 'Arthur', 'Morgan', 'arthur@VanDerLindeGang.com'),
+(-2, 'John', 'Marston', 'john@VanDerLindeGang.com'),
+(-3, 'Dutch', 'van der Linde', 'dutch@VanDerLindeGang.com'),
+(-4, 'Hosea', 'Matthews', 'hosea@VanDerLindeGang.com');

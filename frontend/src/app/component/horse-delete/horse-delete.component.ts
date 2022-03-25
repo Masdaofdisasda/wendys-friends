@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HorseService} from '../service/horse.service';
-import {Horse} from '../dto/horse';
+import {HorseService} from '../../service/horse.service';
+import {Horse} from '../../dto/horse';
 
 @Component({
   selector: 'app-horse-delete',
