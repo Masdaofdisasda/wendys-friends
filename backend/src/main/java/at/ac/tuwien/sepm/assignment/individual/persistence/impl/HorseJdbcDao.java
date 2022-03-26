@@ -208,6 +208,7 @@ public class HorseJdbcDao implements HorseDao {
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);
+        if (horses.isEmpty()) throw new NotFoundException("Could not find a horse with a name qualities: " + horseDto);
         log.debug("search could be performed");
         return horses;
 
