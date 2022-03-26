@@ -66,7 +66,7 @@ export class HorseAddComponent implements OnInit {
    * display and list values. Maps `{name: "band", id:"id" }` into a string
    */
   resultFormatOwnerValue(value: any) {
-    return value.surname;
+    return value.givenname +' '+ value.surname;
   }
 
   /**
@@ -85,7 +85,7 @@ export class HorseAddComponent implements OnInit {
    */
   inputFormatOwner(value: any)   {
     if(value.surname)
-    { return value.surname;}
+    { return value.givenname +' '+ value.surname;}
     return value;
   }
 

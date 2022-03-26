@@ -75,11 +75,11 @@ public class OwnerJdbcDao implements OwnerDao {
     public List<Owner> getOwner(String searchText){
         log.trace("getOwner()", searchText);
         final String sql = "SELECT * FROM " + TABLE_NAME +
-                " WHERE UPPER(SURNAME) LIKE ?";
+                " WHERE UPPER(SURNAME) LIKE ? OR UPPER(GIVENNAME) LIKE ?";
         List<Owner> owners = jdbcTemplate.query(con  -> {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, "%"+searchText.toUpperCase()+"%");
-            //stmt.setString(2, "%"+searchText.toUpperCase()+"%");
+            stmt.setString(2, "%"+searchText.toUpperCase()+"%");
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);

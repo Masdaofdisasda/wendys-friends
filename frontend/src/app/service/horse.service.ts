@@ -63,11 +63,11 @@ export class HorseService {
     let uri = baseUri + '/search?';
     let addAnd = false;
 
-    if(horse.name!==null){
+    if(horse.name!==''){
       uri=uri+'name='+horse.name;
       addAnd=true;
     }
-    if(horse.description!==null){
+    if(horse.description!==''){
       if(addAnd) {uri=uri+'&';}
       uri=uri+'description='+horse.description;
       addAnd=true;
@@ -85,7 +85,7 @@ export class HorseService {
     }
     if(horse.owner!==null){
       if(addAnd) {uri=uri+'&';}
-      uri=uri+'owner='+horse.owner;
+      uri=uri+'owner='+horse.owner.toString();
     }
 
     return this.http.get<Horse[]>(uri);

@@ -6,7 +6,7 @@
   <div>description: {{horse?.description}}</div>
   <div>born: {{horse?.birthdate}}</div>
   <div>gender: {{horse?.gender}}</div>
-  <div>owner: {{horse?.owner}}</div>
+  <div>owner: {{owner?.givenname}} {{owner?.surname}}</div>
   <div>mother: <a [routerLink]="['/horse', mom.id]" >{{mom?.name}}</a></div>
   <div>father: <a [routerLink]="['/horse', dad.id]" >{{dad?.name}}</a></div>
 

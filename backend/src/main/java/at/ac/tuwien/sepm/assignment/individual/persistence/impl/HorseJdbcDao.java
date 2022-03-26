@@ -155,19 +155,27 @@ public class HorseJdbcDao implements HorseDao {
     public List<Horse> searchHorse(HorseDto horseDto){
         log.trace("searchHorse()", horseDto);
         final String and = " AND ";
-        final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE" +
-                " UPPER(NAME) LIKE ?" + and + "UPPER(DESCRIPTION) LIKE ?" + and +
-                "BIRTHDATE <= ?" + and + "GENDER LIKE ?" + and +
-                "OWNER LIKE ?;";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE" +
+                " (UPPER(NAME) LIKE ?)" + and +
+                "(UPPER(DESCRIPTION) LIKE ?)" + and +
+                "(BIRTHDATE <= ?)" + and +
+                "(GENDER LIKE ?)";
+        if (horseDto.owner() != null){
+            sql = sql + and + "(OWNER=?);";
+        }else sql = sql + ";";
+
+        String finalSql = sql;
         List<Horse> horses = jdbcTemplate.query(con -> {
-            PreparedStatement stmt = con.prepareStatement(sql);
+            PreparedStatement stmt = con.prepareStatement(finalSql);
             if (horseDto.name() != null){
                 stmt.setString(1, "%"+horseDto.name().toUpperCase()+"%");
             } else stmt.setString(1, "%");
 
             if (horseDto.description() != null){
-                stmt.setString(2, "%"+horseDto.description().toUpperCase()+"%");
-            }else stmt.setString(2, "%");
+                stmt.setString(2, "%"+horseDto.description().toUpperCase()+"% AND NOT DESCRIPTION=''");
+            }else {
+                stmt.setString(2, "%");
+            }
 
             if (horseDto.birthdate() != null){
                 stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
@@ -178,8 +186,8 @@ public class HorseJdbcDao implements HorseDao {
             } else stmt.setString(4, "%");
 
             if (horseDto.owner() != null){
-                stmt.setString(5, "%"+horseDto.owner()+"%");
-            } stmt.setString(5, "%");
+                stmt.setLong(5, horseDto.owner());
+            }
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);

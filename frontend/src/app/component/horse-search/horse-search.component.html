@@ -1,7 +1,7 @@
 <div>
   <div>
     <h2>search Horses</h2>
-    <form #form="ngForm"  novalidate (ngSubmit)="searchHorse(horseName.value,horseDesc.value,horseDate.valueAsDate,gender,horseOwner.value)">
+    <form #form="ngForm"  novalidate (ngSubmit)="searchHorse(horseName.value,horseDesc.value,horseDate.valueAsDate,gender)">
 
 
       <label for="horse-name">Name: </label>
@@ -20,12 +20,20 @@
         <option value="f">female</option>
       </select>
 
-      <label for="horse-owner">Owner: </label>
-      <input id="horse-owner" #horseOwner placeholder="Enter owner"/>
+      <label for="new-horse-owner">owner: </label>
+      <input id="new-horse-owner" type="text"
+             name="horseOwner"
+             class="form-control"
+             [(ngModel)]="selectedOwner"
+             [ngbTypeahead]="searchOwner"
+             [resultFormatter]="resultFormatOwnerValue"
+             [inputFormatter]="inputFormatOwner"
+             #instance="ngbTypeahead"
+             placeholder="optional"
+      />
 
       <button class="btn btn-dark" type="submit">Search horse</button>
     </form>
-
   </div>
 
   <app-horse-update [horse]="selectedHorseEdit"></app-horse-update>
@@ -53,7 +61,7 @@
         <td>{{horse.description}}</td>
         <td>{{horse.birthdate}}</td>
         <td>{{horse.gender}}</td>
-        <td>{{horse.owner}}</td>
+        <td>{{getDisplayName(horse.owner)}}</td>
         <td><a [routerLink]="['/horse', horse.id]" >view</a></td>
         <td><a [class.selected]="horse === selectedHorseEdit" type="button" (click)="onSelectEdit(horse)"> edit</a></td>
         <td><a [class.selected]="horse === selectedHorseDelete" type="button" (click)="onSelectDelete(horse)"> delete</a></td>

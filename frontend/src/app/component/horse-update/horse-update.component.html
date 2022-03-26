@@ -19,15 +19,24 @@
     </select>
 
     <label for="new-horse-owner">owner: </label>
-    <input id="new-horse-owner" #horseOwner placeholder="{{horse.owner}}"/>
+    <input id="new-horse-owner" type="text"
+           name="horseOwner"
+           class="form-control"
+           [(ngModel)]="selectedOwner"
+           [ngbTypeahead]="searchOwner"
+           [resultFormatter]="resultFormatOwnerValue"
+           [inputFormatter]="inputFormatOwner"
+           #instance="ngbTypeahead"
+           placeholder="(leave blank to delete owner)"
+    />
     <label for="new-horse-mom">mother: </label>
     <input id="new-horse-mom" type="text"
            name="horseMom"
            class="form-control"
            [(ngModel)]="selectedMom"
            [ngbTypeahead]="searchMom"
-           [resultFormatter]="resultFormatBandListValue"
-           [inputFormatter]="inputFormatMom"
+           [resultFormatter]="resultFormatHorseValue"
+           [inputFormatter]="inputFormatHorse"
            #instance="ngbTypeahead"
            placeholder="{{mom?.name}} (leave blank to delete mother)"
     />
@@ -38,15 +47,15 @@
            class="form-control"
            [(ngModel)]="selectedDad"
            [ngbTypeahead]="searchDad"
-           [resultFormatter]="resultFormatBandListValue"
-           [inputFormatter]="inputFormatDad"
+           [resultFormatter]="resultFormatHorseValue"
+           [inputFormatter]="inputFormatHorse"
            #instance="ngbTypeahead"
            placeholder="{{dad?.name}} (leave blank to delete father)"
     />
 
     <!-- (click) passes input value to add() and then clears the input -->
     <button type="button" class="add-button" (click)=
-      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, horseOwner.value, selectedMom.id, selectedDad.id); horseName.value=''">
+      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, selectedOwner.id, selectedMom.id, selectedDad.id); horseName.value=''">
       save changes
     </button>
     <button type="button" class="add-button" (click)="horse=null">

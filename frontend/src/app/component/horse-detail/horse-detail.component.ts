@@ -4,6 +4,8 @@ import {map, switchMap} from 'rxjs/operators';
 
 import {Horse} from '../../dto/horse';
 import {HorseService} from '../../service/horse.service';
+import {OwnerService} from '../../service/owner.service';
+import {Owner} from '../../dto/owner';
 
 @Component({
   selector: 'app-horse-detail',
@@ -12,6 +14,7 @@ import {HorseService} from '../../service/horse.service';
 })
 export class HorseDetailComponent implements OnInit {
   horse: Horse ;
+  owner?: Owner;
   mom?: Horse;
   dad?: Horse;
   selectedHorseEdit?: Horse;
@@ -20,6 +23,7 @@ export class HorseDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: HorseService,
+    private ownerService: OwnerService,
     ) { }
 
   ngOnInit(): void {
@@ -34,6 +38,9 @@ export class HorseDetailComponent implements OnInit {
       }),
       map(horse => this.horse = horse)
     ).subscribe(horse => {
+      if (horse.owner){
+        this.ownerService.getOwner(this.horse.owner).subscribe(owner => this.owner = owner);
+      }
       if (horse.mom) {
         this.service.getHorse(this.horse.mom).subscribe(mom => this.mom = mom);
       }

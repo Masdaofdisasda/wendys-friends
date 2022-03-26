@@ -3,6 +3,8 @@ import {Horse} from '../../dto/horse';
 import {HorseService} from '../../service/horse.service';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {Owner} from '../../dto/owner';
+import {OwnerService} from '../../service/owner.service';
 
 @Component({
   selector: 'app-horse-update',
@@ -13,6 +15,7 @@ export class HorseUpdateComponent implements OnInit {
   @Input() horse: Horse;
   horses: Horse[];
   success = false;
+  selectedOwner?: Owner;
   selectedMom?: Horse;
   selectedDad?: Horse;
   mom?: Horse;
@@ -20,6 +23,7 @@ export class HorseUpdateComponent implements OnInit {
 
   constructor(
     private service: HorseService,
+    private ownerService: OwnerService,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +43,13 @@ export class HorseUpdateComponent implements OnInit {
     this.selectedMom=null;
     this.selectedDad=null;
   }
+
+  searchOwner = (text$: Observable<string>) => text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    switchMap((searchText)=> this.ownerService.ownerLookup(searchText))
+  );
+
   searchMom = (text$: Observable<string>) => text$.pipe(
     debounceTime(200),
     distinctUntilChanged(),
@@ -57,14 +68,23 @@ export class HorseUpdateComponent implements OnInit {
    * Used to format the result data from the lookup into the
    * display and list values. Maps `{name: "band", id:"id" }` into a string
    */
-  resultFormatBandListValue(value: any) {
+  resultFormatHorseValue(value: any) {
     return value.name;
   }
+
+  /**
+   * Used to format the result data from the lookup into the
+   * display and list values. Maps `{name: "band", id:"id" }` into a string
+   */
+  resultFormatOwnerValue(value: any) {
+    return value.givenname +' '+ value.surname;
+  }
+
   /**
    * Initially binds the string value and then after selecting
    * an item by checking either for string or key/value object.
    */
-  inputFormatMom(value: any)   {
+  inputFormatHorse(value: any)   {
     if(value.name)
     { return value.name;}
     return value;
@@ -73,9 +93,9 @@ export class HorseUpdateComponent implements OnInit {
    * Initially binds the string value and then after selecting
    * an item by checking either for string or key/value object.
    */
-  inputFormatDad(value: any)   {
-    if(value.name)
-    { return value.name;}
+  inputFormatOwner(value: any)   {
+    if(value.surname)
+    { return value.givenname +' '+ value.surname;}
     return value;
   }
 }
