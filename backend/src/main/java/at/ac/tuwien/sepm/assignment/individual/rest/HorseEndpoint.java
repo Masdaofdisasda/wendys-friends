@@ -40,12 +40,12 @@ public class HorseEndpoint {
     }
 
     @GetMapping(value = "/{id}")
-    public HorseDto getOneById(@PathVariable("id") Long id) {
+    public HorseDto getHorseById(@PathVariable("id") Long id) {
         log.info("GET "+ "/horses" + "/{}", id);
         try {
-            return mapper.entityToDto(service.getOneById(id));
+            return mapper.entityToDto(service.getHorseById(id));
         } catch (Exception e) {
-            throw handleException(e, "getOneByID()" + id);
+            throw handleException(e, "getHorseById()" + id);
         }
     }
 
@@ -95,7 +95,6 @@ public class HorseEndpoint {
         }else {
             ownerL = Long.valueOf(owner).longValue();
         }
-        log.debug("name="+name+" description="+description+" birthdate="+birth+" gender="+gender+" owner="+ownerL);
         HorseDto horseDto = new HorseDto(0L, name, description, birth, gender, ownerL, 0L, 0L);
         log.info("GET"+" /search", horseDto);
         try {
@@ -109,17 +108,17 @@ public class HorseEndpoint {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createHorse(@RequestBody final HorseDto horseDto) {
-        log.info("POST " + "create horse " + horseDto);
+        log.info("POST " + "/horses " + horseDto);
         try {
-            service.save(horseDto);
+            service.createHorse(horseDto);
         } catch (Exception e) {
-            throw handleException(e, "create horse " + horseDto);
+            throw handleException(e, "createHorse() " + horseDto);
         }
     }
 
     @PutMapping
     public void updateHorse(@RequestBody final HorseDto horseDto){
-        log.info("PUT " + "update horse " + horseDto);
+        log.info("PUT " + "/horses " + horseDto);
         try{
             service.updateHorse(horseDto);
         } catch (Exception e) {

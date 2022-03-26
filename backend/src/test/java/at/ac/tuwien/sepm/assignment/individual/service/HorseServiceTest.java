@@ -40,7 +40,7 @@ public class HorseServiceTest {
   public void saveHorseCanSaveHorse(){
     HorseDto horseDto = new HorseDto(1L, "Horsy", "is a horse", LocalDate.of(2020, 7, 24), "f", -1L,
             -1L, -2L);
-    horseService.save(horseDto);
+    horseService.createHorse(horseDto);
 
     List<Horse> horses = null;
     try {
@@ -69,10 +69,10 @@ public class HorseServiceTest {
             -1L, null);
 
     Assertions.assertThrows(ValidationException.class, ()->{
-      horseService.save(horseDto1);
-      horseService.save(horseDto2);
-      horseService.save(horseDto3);
-      horseService.save(horseDto4);
+      horseService.createHorse(horseDto1);
+      horseService.createHorse(horseDto2);
+      horseService.createHorse(horseDto3);
+      horseService.createHorse(horseDto4);
     });
   }
 

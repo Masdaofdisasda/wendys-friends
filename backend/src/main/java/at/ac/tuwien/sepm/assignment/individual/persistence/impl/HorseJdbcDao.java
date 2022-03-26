@@ -36,8 +36,8 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse getOneById(Long id) {
-        log.trace("Get horse with id {}", id);
+    public Horse getHorseById(Long id) {
+        log.trace("getHorseById()", id);
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Horse> horses = jdbcTemplate.query(con -> {
@@ -52,8 +52,8 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public void saveHorse(HorseDto horseDto) {
-        log.trace("saveHorse()");
+    public void createHorse(HorseDto horseDto) {
+        log.trace("createHorse()", horseDto);
         final String sql = "INSERT INTO " + TABLE_NAME +
                 " (name, description, birthdate, gender, owner, mom, dad)" +
                 " VALUES (?,?,?,?,?,?,?);";
@@ -154,7 +154,7 @@ public class HorseJdbcDao implements HorseDao {
 
     @Override
     public List<Horse> getMaleHorse(String searchText){
-        log.trace("getFemaleHorse()",searchText);
+        log.trace("getMaleHorse()",searchText);
         final String sql = "SELECT * FROM "+ TABLE_NAME +" WHERE GENDER='m' AND UPPER(NAME) like ?";
         List<Horse> horses = jdbcTemplate.query(con -> {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -212,7 +212,6 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     private Horse mapRow(ResultSet result, int rownum) throws SQLException {
-        log.trace("map horse " + result.getString("name") + " to entity");
         Horse horse = new Horse();
         horse.setId(result.getLong("id"));
         horse.setName(result.getString("name"));

@@ -27,7 +27,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<Owner> allOwners() {
-        log.trace("get all owners");
+        log.trace("allOwners()");
         try {
             return dao.getAll();
         } catch (DataAccessException e) {
@@ -36,22 +36,22 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void save(OwnerDto ownerDto){
-        log.trace("save()");
+    public void createOwner(OwnerDto ownerDto){
+        log.trace("createOwner()", ownerDto);
         validator.validateSaveOwner(ownerDto);
         log.debug("owner fields are valid");
         try {
-            dao.saveOwner(ownerDto);
+            dao.createOwner(ownerDto);
         }catch (DataAccessException e){
             throw new PersistenceDataException(e);
         }
     }
 
     @Override
-    public Owner getOneById(Long id){
-        log.trace("getOneById()", id);
+    public Owner getOwnerById(Long id){
+        log.trace("getOwnerById()", id);
         try {
-            return dao.getOneById(id);
+            return dao.getOwnerById(id);
         } catch (NotFoundException e){
             throw new NotFoundException(e);
         }

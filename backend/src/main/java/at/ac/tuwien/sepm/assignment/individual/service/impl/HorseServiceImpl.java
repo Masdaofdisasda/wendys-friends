@@ -26,7 +26,7 @@ public class HorseServiceImpl implements HorseService {
 
     @Override
     public List<Horse> allHorses() {
-        log.trace("get all horses");
+        log.trace("allHorses()");
         try {
             return dao.getAll();
         } catch (DataAccessException e) {
@@ -35,10 +35,10 @@ public class HorseServiceImpl implements HorseService {
     }
 
     @Override
-    public Horse getOneById(Long id) {
-        log.trace("getOneById()", id);
+    public Horse getHorseById(Long id) {
+        log.trace("getHorseById()", id);
         try {
-            return dao.getOneById(id);
+            return dao.getHorseById(id);
         } catch (NotFoundException e) {
             e.printStackTrace(); //TODO
         }
@@ -47,12 +47,12 @@ public class HorseServiceImpl implements HorseService {
     }
 
     @Override
-    public void save(HorseDto horseDto) {
-        log.trace("save()");
+    public void createHorse(HorseDto horseDto) {
+        log.trace("createHorse()", horseDto);
         validator.validateSaveHorse(horseDto);
         log.debug("horse fields are valid");
         try {
-            dao.saveHorse(horseDto);
+            dao.createHorse(horseDto);
         } catch (Exception e) {
             e.printStackTrace(); //TODO
         }
@@ -61,7 +61,7 @@ public class HorseServiceImpl implements HorseService {
 
     @Override
     public void updateHorse(HorseDto horseDto){
-        log.trace("updateHorse()");
+        log.trace("updateHorse()", horseDto);
         validator.validateUpdateHorse(horseDto);
         log.debug("horse fields are valid");
         try {

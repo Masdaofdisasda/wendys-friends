@@ -2,7 +2,6 @@ package at.ac.tuwien.sepm.assignment.individual.rest;
 
 
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
-import at.ac.tuwien.sepm.assignment.individual.exception.DataValidationException;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceDataException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
@@ -42,21 +41,21 @@ public class OwnerEndpoint {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createOwner(@RequestBody final OwnerDto ownerDto){
-        log.info("POST " + "create owner ", ownerDto);
+        log.info("POST " + "/owners ", ownerDto);
         try {
-            service.save(ownerDto);
+            service.createOwner(ownerDto);
         } catch (Exception e){
             throw handleException(e, "createOwner");
         }
     }
 
     @GetMapping(value="/{id}")
-    public OwnerDto getOneById(@PathVariable("id") Long id){
+    public OwnerDto getOwnerById(@PathVariable("id") Long id){
         log.info("GET "+ "/owners"+"/{}", id);
         try {
-            return mapper.entityToDto(service.getOneById(id));
+            return mapper.entityToDto(service.getOwnerById(id));
         } catch (Exception e){
-            throw handleException(e, "getOneById()" + id);
+            throw handleException(e, "getOwnerById()" + id);
         }
     }
 

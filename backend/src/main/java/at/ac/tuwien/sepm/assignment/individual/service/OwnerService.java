@@ -27,7 +27,7 @@ public interface OwnerService {
      * @throws ValidationException if there is a problem validating the owner fields
      * @throws PersistenceDataException if there is a problem accessing the database
      */
-    void save(OwnerDto ownerDto);
+    void createOwner(OwnerDto ownerDto);
 
     /**
      * forwards request to get a single owner to persistence
@@ -35,7 +35,7 @@ public interface OwnerService {
      * @return horse with id
      * @throws NotFoundException if no such owner was found
      */
-    Owner getOneById(Long id);
+    Owner getOwnerById(Long id);
 
     /**
      * look for owners with names matching searchText

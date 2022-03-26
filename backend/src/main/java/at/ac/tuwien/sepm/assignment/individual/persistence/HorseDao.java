@@ -26,7 +26,7 @@ public interface HorseDao {
      * @throws DataAccessException if there is a problem during db access
      * @throws NotFoundException if the horse could not be found
      */
-    Horse getOneById(Long id);
+    Horse getHorseById(Long id);
 
     /**
      * saves a new horse dataset in the database
@@ -34,7 +34,7 @@ public interface HorseDao {
      * @return the saved entity
      * @throws DataAccessException if there is a problem during db access
      */
-    void saveHorse(HorseDto horseDto) throws DataAccessException;
+    void createHorse(HorseDto horseDto) throws DataAccessException;
 
     /**
      * change horse data

@@ -25,14 +25,14 @@ public interface HorseService {
      * @return horse with id
      * @throws NotFoundException if no such horse was found
      */
-    Horse getOneById(Long id);
+    Horse getHorseById(Long id);
 
     /**
      * validates horse fields and sends data to persistence
      * @param horseDto horse with data to validate
      * @throws ValidationException if any field is invalid
      */
-    void save(HorseDto horseDto) throws ValidationException;
+    void createHorse(HorseDto horseDto) throws ValidationException;
 
     /**
      * changes data

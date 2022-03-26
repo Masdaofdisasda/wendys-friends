@@ -33,13 +33,13 @@ public class OwnerJdbcDao implements OwnerDao {
 
     @Override
     public List<Owner> getAll() {
-        log.trace("get all horses");
+        log.trace("getAll()");
         return jdbcTemplate.query(SQL_SELECT_ALL, this::mapRow);
     }
 
     @Override
-    public void saveOwner(OwnerDto ownerDto){
-        log.trace("saveOwner()");
+    public void createOwner(OwnerDto ownerDto){
+        log.trace("createOwner()", ownerDto);
         final String sql = "INSERT INTO " + TABLE_NAME +
                 " (givenname, surname, email)" +
                 " VALUES (?,?,?);";
@@ -56,8 +56,8 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public Owner getOneById(Long id){
-        log.trace("Get owner with id {}", id);
+    public Owner getOwnerById(Long id){
+        log.trace("getOwnerById()", id);
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Owner> owners = jdbcTemplate.query(con -> {
@@ -88,7 +88,6 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     private Owner mapRow(ResultSet result, int rownum) throws SQLException {
-        log.trace("map owner " + result.getString("surname") + " to entity");
         Owner owner = new Owner();
         owner.setId(result.getLong("id"));
         owner.setGivenname(result.getString("givenname"));

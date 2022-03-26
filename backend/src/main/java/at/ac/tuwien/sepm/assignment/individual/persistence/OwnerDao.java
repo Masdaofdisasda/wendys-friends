@@ -25,7 +25,7 @@ public interface OwnerDao {
      * @param ownerDto owner that should be saved
      * @throws DataAccessException if there is a problem during db access
      */
-    void saveOwner(OwnerDto ownerDto);
+    void createOwner(OwnerDto ownerDto);
 
     /**
      * Find a single owner according to its id
@@ -34,7 +34,7 @@ public interface OwnerDao {
      * @throws DataAccessException if there is a problem during db access
      * @throws NotFoundException if the owner could not be found
      */
-    Owner getOneById(Long id);
+    Owner getOwnerById(Long id);
 
     /**
      * searches owners matching searchText
