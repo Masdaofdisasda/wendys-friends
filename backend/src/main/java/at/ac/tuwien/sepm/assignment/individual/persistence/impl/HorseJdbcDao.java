@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -47,7 +46,7 @@ public class HorseJdbcDao implements HorseDao {
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);
-        if (horses.isEmpty()) throw new NotFoundException("Could not find owner with id" + id);
+        if (horses.isEmpty()) throw new NotFoundException("Could not find horse with id" + id);
         log.debug("horse found");
         return horses.get(0);
     }
@@ -92,7 +91,11 @@ public class HorseJdbcDao implements HorseDao {
         stmt.setString(2, horseDto.description());
         stmt.setDate(3, Date.valueOf(horseDto.birthdate()));
         stmt.setString(4, horseDto.gender());
-        stmt.setString(5, horseDto.owner());
+        if (horseDto.owner() == null) {
+            stmt.setNull(5, Types.INTEGER);
+        } else {
+            stmt.setLong(5, horseDto.owner());
+        }
         if (horseDto.mom() == null) {
             stmt.setNull(6, Types.INTEGER);
         } else {
@@ -137,10 +140,10 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public List<Horse> getMaleHorse(String searchText){
         log.trace("getFemaleHorse()",searchText);
-        final String sql = "SELECT * FROM "+ TABLE_NAME +" WHERE GENDER='m' AND NAME like ?";
+        final String sql = "SELECT * FROM "+ TABLE_NAME +" WHERE GENDER='m' AND UPPER(NAME) like ?";
         List<Horse> horses = jdbcTemplate.query(con -> {
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, "%"+searchText+"%");
+            stmt.setString(1, "%"+searchText.toUpperCase()+"%");
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);
@@ -175,7 +178,7 @@ public class HorseJdbcDao implements HorseDao {
             } else stmt.setString(4, "%");
 
             if (horseDto.owner() != null){
-                stmt.setString(5, "%"+horseDto.owner().toUpperCase()+"%");
+                stmt.setString(5, "%"+horseDto.owner()+"%");
             } stmt.setString(5, "%");
             log.debug(stmt.toString());
             return stmt;
@@ -193,7 +196,7 @@ public class HorseJdbcDao implements HorseDao {
         horse.setDescription(result.getString("description"));
         horse.setBirthdate(result.getDate("birthdate"));
         horse.setGender(result.getString("gender"));
-        horse.setOwner(result.getString("owner"));
+        horse.setOwner(result.getLong("owner"));
         horse.setMom(result.getLong("mom"));
         horse.setDad(result.getLong("dad"));
         return horse;

@@ -31,7 +31,7 @@ export class HorseUpdateComponent implements OnInit {
     }
   }
 
-  update(id: number, name: string, description: string, birthdate: Date, gender: string, owner: string, mom: number, dad: number): void {
+  update(id: number, name: string, description: string, birthdate: Date, gender: string, owner: number, mom: number, dad: number): void {
     this.service.updateHorses({id, name, description, birthdate, gender, owner, mom, dad} as Horse)
       .subscribe(horse => {this.horses.push(horse);});
     this.horse=null;

@@ -33,4 +33,8 @@ export class OwnerService {
   addOwner(owner: Owner): Observable<Owner> {
     return this.http.post<Owner>(baseUri, owner, this.httpOptions);
   }
+
+  ownerLookup(searchText: string): Observable<Owner[]>{
+    return this.http.get<Owner[]>(baseUri + '/' + 'lookup' + '/' + searchText);
+  }
 }

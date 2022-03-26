@@ -26,7 +26,7 @@ public interface HorseDao {
      * @throws DataAccessException if there is a problem during db access
      * @throws NotFoundException if the horse could not be found
      */
-    Horse getOneById(Long id) throws DataAccessException;
+    Horse getOneById(Long id);
 
     /**
      * saves a new horse dataset in the database

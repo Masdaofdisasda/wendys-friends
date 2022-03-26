@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
-import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
@@ -46,6 +45,29 @@ public class OwnerServiceImpl implements OwnerService {
             dao.saveOwner(ownerDto);
         }catch (DataAccessException e){
             throw new PersistenceDataException(e);
+        }
+    }
+
+    @Override
+    public Owner getOneById(Long id){
+        log.trace("getOneById()", id);
+        try {
+            return dao.getOneById(id);
+        } catch (NotFoundException e){
+            throw new NotFoundException(e);
+        }
+    }
+
+    @Override
+    public List<Owner> getOwner(String searchText){
+        log.trace("getOwner()", searchText);
+        validator.validateSearchText(searchText);
+        log.debug("search text is valid");
+        try {
+            return dao.getOwner(searchText);
+        } catch (Exception e){
+            throw new NotFoundException(e);
+            //TODO
         }
     }
 }

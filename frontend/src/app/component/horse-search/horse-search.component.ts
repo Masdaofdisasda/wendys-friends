@@ -22,7 +22,7 @@ export class HorseSearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchHorse(name: string, description: string, birthdate: Date, gender: string, owner: string){
+  searchHorse(name: string, description: string, birthdate: Date, gender: string, owner: number){
     this.service.searchHorse({name, description, birthdate, gender, owner} as Horse)
       .subscribe((horses: Horse[]) => {this.horses = horses;});
   }

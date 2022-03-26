@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.mapper.OwnerMapper;
 import at.ac.tuwien.sepm.assignment.individual.persistence.OwnerDao;
 import org.slf4j.Logger;
@@ -52,6 +53,38 @@ public class OwnerJdbcDao implements OwnerDao {
             return stmt;
         }, keyHolder);
         log.debug("owner saved in database");
+    }
+
+    @Override
+    public Owner getOneById(Long id){
+        log.trace("Get owner with id {}", id);
+
+        final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
+        List<Owner> owners = jdbcTemplate.query(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setLong(1,id);
+            log.debug(stmt.toString());
+            return stmt;
+        }, this::mapRow);
+        if (owners.isEmpty()) throw new NotFoundException("Could not find owner with id" + id);
+        log.debug("owner found");
+        return owners.get(0);
+    }
+
+    @Override
+    public List<Owner> getOwner(String searchText){
+        log.trace("getOwner()", searchText);
+        final String sql = "SELECT * FROM " + TABLE_NAME +
+                " WHERE UPPER(SURNAME) LIKE ?";
+        List<Owner> owners = jdbcTemplate.query(con  -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, "%"+searchText.toUpperCase()+"%");
+            //stmt.setString(2, "%"+searchText.toUpperCase()+"%");
+            log.debug(stmt.toString());
+            return stmt;
+        }, this::mapRow);
+        log.debug("owner(s) were found");
+        return owners;
     }
 
     private Owner mapRow(ResultSet result, int rownum) throws SQLException {

@@ -50,6 +50,26 @@ public class OwnerEndpoint {
         }
     }
 
+    @GetMapping(value="/{id}")
+    public OwnerDto getOneById(@PathVariable("id") Long id){
+        log.info("GET "+ "/owners"+"/{}", id);
+        try {
+            return mapper.entityToDto(service.getOneById(id));
+        } catch (Exception e){
+            throw handleException(e, "getOneById()" + id);
+        }
+    }
+
+    @GetMapping(value = "/lookup/{searchname}")
+    public Stream<OwnerDto> getOwner(@PathVariable("searchname") String searchText){
+        log.info("GET" + "/owners/lookup" + "/{}", searchText);
+        try {
+            return service.getOwner(searchText).stream().map(mapper::entityToDto);
+        } catch (Exception e) {
+            throw handleException(e, "getOwner()" + searchText);
+        }
+    }
+
     private ResponseStatusException handleException(Exception e, String message) {
         log.error(message,e);
         if(e instanceof ValidationException){

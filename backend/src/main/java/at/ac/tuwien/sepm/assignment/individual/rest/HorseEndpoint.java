@@ -89,7 +89,7 @@ public class HorseEndpoint {
             DateTimeFormatter format = DateTimeFormatter.ISO_LOCAL_DATE;
             birth = LocalDate.parse(birthdate, format);
         }
-        HorseDto horseDto = new HorseDto(0L, name, description, birth, gender, owner, 0L, 0L);
+        HorseDto horseDto = new HorseDto(0L, name, description, birth, gender, Long.getLong(owner), 0L, 0L);
         log.info("GET"+" /search", horseDto);
         try {
             return service.searchHorse(horseDto).stream()

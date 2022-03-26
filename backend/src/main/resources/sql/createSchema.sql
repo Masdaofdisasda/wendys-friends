@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS horse
     description   VARCHAR(255),
     birthdate     DATE NOT NULL,
     gender        VARCHAR(1) NOT NULL,
-    owner         VARCHAR(255),
+    owner         BIGINT,
     mom           BIGINT,
     dad           BIGINT
 );

@@ -32,7 +32,7 @@ public class HorseDaoTest {
     assertThat(horse.getDescription()).isEqualTo("horse test 9");
     assertThat(horse.getBirthdate()).isEqualTo("2009-01-01");
     assertThat(horse.getGender()).isEqualTo("m");
-    assertThat(horse.getOwner()).isEqualTo("sql");
+    assertThat(horse.getOwner()).isEqualTo(-1L);
     assertThat(horse.getMom()).isEqualTo(-1);
     assertThat(horse.getDad()).isEqualTo(-2);
   }

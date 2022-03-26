@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceDataException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import org.springframework.dao.DataAccessException;
@@ -27,4 +28,19 @@ public interface OwnerService {
      * @throws PersistenceDataException if there is a problem accessing the database
      */
     void save(OwnerDto ownerDto);
+
+    /**
+     * forwards request to get a single owner to persistence
+     * @param id of an owner
+     * @return horse with id
+     * @throws NotFoundException if no such owner was found
+     */
+    Owner getOneById(Long id);
+
+    /**
+     * look for owners with names matching searchText
+     * @param searchText matching term
+     * @return all owners matching searchText
+     */
+    List<Owner> getOwner(String searchText);
 }

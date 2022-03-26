@@ -9,11 +9,11 @@ public class Horse {
     private String description;
     private LocalDate birthdate;
     private String gender;
-    private String owner;
+    private Long owner;
     private Long mom;
     private Long dad;
 
-    public Horse(Long id, String name, String description, LocalDate birthdate, String gender, String owner, Long mom, Long dad ){
+    public Horse(Long id, String name, String description, LocalDate birthdate, String gender, Long owner, Long mom, Long dad ){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -58,9 +58,9 @@ public class Horse {
         this.gender = gender;
     }
 
-    public String getOwner(){return owner;}
+    public Long getOwner(){return owner;}
 
-    public void setOwner( String owner){this.owner = owner;}
+    public void setOwner( Long owner){this.owner = owner;}
 
     public Long getMom(){return mom;}
 

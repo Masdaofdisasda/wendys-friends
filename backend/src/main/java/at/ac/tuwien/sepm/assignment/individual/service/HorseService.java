@@ -21,11 +21,11 @@ public interface HorseService {
 
     /**
      * forwards request to get a single horse to persistence
-     * @param id number bigger than 0
+     * @param id of a horse
      * @return horse with id
      * @throws NotFoundException if no such horse was found
      */
-    Horse getOneById(Long id) throws NotFoundException;
+    Horse getOneById(Long id);
 
     /**
      * validates horse fields and sends data to persistence
