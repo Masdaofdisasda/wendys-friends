@@ -14,33 +14,30 @@ import java.util.List;
 public interface OwnerDao {
 
     /**
-     * Get all horses stored in the persistent data store.
-     * @return a list of all stored horses
-     * @throws DataAccessException if there is a problem during db access
+     * @return a list of all stored owners
+     * @throws DataAccessException if there is a problem during database access
      */
     List<Owner> getAll();
 
     /**
-     * saves a new owner dataset in the database
-     * @param ownerDto owner that should be saved
-     * @throws DataAccessException if there is a problem during db access
+     * @param ownerDto a new owner that should be saved in the database
+     * @throws DataAccessException if there is a problem during database access
      */
     void createOwner(OwnerDto ownerDto);
 
     /**
-     * Find a single owner according to its id
-     * @param id of the owner
-     * @return a owner with the id
-     * @throws DataAccessException if there is a problem during db access
-     * @throws NotFoundException if the owner could not be found
+     * @param id of the owner that should be returned
+     * @return an owner matching the given id
+     * @throws DataAccessException if there is a problem during database access
+     * @throws NotFoundException if there is no owner with given id
      */
     Owner getOwnerById(Long id);
 
     /**
-     * searches owners matching searchText
-     * @param searchText text to match
-     * @return list of matching owners
+     * @param searchText the name (or part of a name) of an owner
+     * @return list of owners matching at least part of the searchText
      * @throws DataAccessException if there is a problem during db access
+     * @throws NotFoundException if no owner matching searchText is in the database.
      */
     List<Owner> getOwner(String searchText);
 }

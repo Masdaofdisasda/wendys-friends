@@ -148,6 +148,7 @@ public class HorseJdbcDao implements HorseDao {
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);
+        if (horses.isEmpty()) throw new NotFoundException("Could not find a female horse with a name like: " + searchText);
         log.debug("female horse(s) were found");
         return horses;
     }
@@ -162,6 +163,7 @@ public class HorseJdbcDao implements HorseDao {
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);
+        if (horses.isEmpty()) throw new NotFoundException("Could not find a male horse with a name like: " + searchText);
         log.debug("male horse(s) were found");
         return horses;
     }

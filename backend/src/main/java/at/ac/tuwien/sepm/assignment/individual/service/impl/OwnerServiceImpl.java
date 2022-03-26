@@ -31,7 +31,7 @@ public class OwnerServiceImpl implements OwnerService {
         try {
             return dao.getAll();
         } catch (DataAccessException e) {
-            throw new NotFoundException(e);
+            throw new PersistenceDataException(e.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public class OwnerServiceImpl implements OwnerService {
         try {
             dao.createOwner(ownerDto);
         }catch (DataAccessException e){
-            throw new PersistenceDataException(e);
+            throw new PersistenceDataException(e.getMessage());
         }
     }
 
@@ -52,8 +52,10 @@ public class OwnerServiceImpl implements OwnerService {
         log.trace("getOwnerById()", id);
         try {
             return dao.getOwnerById(id);
+        } catch (DataAccessException e){
+            throw new PersistenceDataException(e.getMessage());
         } catch (NotFoundException e){
-            throw new NotFoundException(e);
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -64,9 +66,10 @@ public class OwnerServiceImpl implements OwnerService {
         log.debug("search text is valid");
         try {
             return dao.getOwner(searchText);
-        } catch (Exception e){
-            throw new NotFoundException(e);
-            //TODO
+        } catch (DataAccessException e){
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 }

@@ -83,6 +83,7 @@ public class OwnerJdbcDao implements OwnerDao {
             log.debug(stmt.toString());
             return stmt;
         }, this::mapRow);
+        if (owners.isEmpty()) throw new NotFoundException("Could not find a matching owner with a name like: " + searchText);
         log.debug("owner(s) were found");
         return owners;
     }

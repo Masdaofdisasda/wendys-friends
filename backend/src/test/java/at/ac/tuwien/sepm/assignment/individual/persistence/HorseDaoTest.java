@@ -27,7 +27,7 @@ public class HorseDaoTest {
 
   @Test
   public void getOneByIdReturnsAllDataFields(){
-    Horse horse = horseDao.getOneById(-9L);
+    Horse horse = horseDao.getHorseById(-9L);
     assertThat(horse.getName()).isEqualTo("Shamin");
     assertThat(horse.getDescription()).isEqualTo("horse test 9");
     assertThat(horse.getBirthdate()).isEqualTo("2009-01-01");

@@ -34,7 +34,7 @@ public class HorseEndpoint {
         try {
             return service.allHorses().stream()
                     .map(mapper::entityToDto);
-        } catch (NotFoundException e) {
+        } catch (Exception e) {
             throw handleException(e,"allHorses()");
         }
     }
@@ -54,9 +54,7 @@ public class HorseEndpoint {
         log.info("GET" + "/horses/f" + "/{}", searchText);
         try {
             return service.getFemaleHorse(searchText).stream().limit(5).map(mapper::entityToDto);
-        } catch (NotFoundException e) {
-            throw handleException(e,"getFemaleHorse()" + searchText);
-        } catch (ValidationException e){
+        } catch (Exception e){
             throw handleException(e, "getFemaleHorse()" + searchText);
         }
 
@@ -67,12 +65,9 @@ public class HorseEndpoint {
         log.info("GET" + "/horses/m" + "/{}", searchText);
         try {
             return service.getMaleHorse(searchText).stream().limit(5).map(mapper::entityToDto);
-        } catch (NotFoundException e) {
-            throw handleException(e,"getMaleHorse()" + searchText);
-        } catch (ValidationException e){
+        }  catch (Exception e){
             throw handleException(e, "getMaleHorse()" + searchText);
         }
-
     }
 
     @GetMapping(value = "/search")
@@ -100,7 +95,7 @@ public class HorseEndpoint {
         try {
             return service.searchHorse(horseDto).stream()
                     .map(mapper::entityToDto);
-        }catch (NotFoundException e){
+        } catch (Exception e){
             throw handleException(e, "searchHorse()" + horseDto);
         }
     }
@@ -122,7 +117,7 @@ public class HorseEndpoint {
         try{
             service.updateHorse(horseDto);
         } catch (Exception e) {
-            e.printStackTrace(); //TODO
+            throw handleException(e, "updateHorse()" + horseDto);
         }
     }
 
@@ -132,7 +127,7 @@ public class HorseEndpoint {
         try {
             service.deleteHorse(id);
         } catch (Exception e){
-            //TODO
+            throw handleException(e, "deleteHorse()" + id);
         }
     }
 

@@ -6,7 +6,6 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceDataException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
-import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -16,31 +15,32 @@ import java.util.List;
 public interface OwnerService {
 
     /**
-     * Lists all owners stored in the system.
-     * @return list of all stored owners
+     * @return a list of all stored owners
+     * @throws PersistenceDataException if there is a problem during database access
      */
     List<Owner> allOwners();
 
     /**
-     * validates owner fields and sends data to persistence
-     * @param ownerDto owner with data to validate
-     * @throws ValidationException if there is a problem validating the owner fields
-     * @throws PersistenceDataException if there is a problem accessing the database
+     * @param ownerDto a new owner that should be saved in the database
+     * @throws PersistenceDataException if there is a problem during database access
+     * @throws ValidationException if there is something wrong with the ownerDto
      */
     void createOwner(OwnerDto ownerDto);
 
     /**
-     * forwards request to get a single owner to persistence
-     * @param id of an owner
-     * @return horse with id
-     * @throws NotFoundException if no such owner was found
+     * @param id of the owner that should be returned
+     * @return an owner matching the given id
+     * @throws PersistenceDataException if there is a problem during database access
+     * @throws NotFoundException if there is no owner with given id
      */
     Owner getOwnerById(Long id);
 
     /**
-     * look for owners with names matching searchText
-     * @param searchText matching term
-     * @return all owners matching searchText
+     * @param searchText the name (or part of a name) of an owner
+     * @return list of owners matching at least part of the searchText
+     * @throws PersistenceDataException if there is a problem during db access
+     * @throws NotFoundException if no owner matching searchText is in the database.
+     * @throws ValidationException if the searchText is empty
      */
     List<Owner> getOwner(String searchText);
 }

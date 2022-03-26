@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.service.impl;
 import at.ac.tuwien.sepm.assignment.individual.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceDataException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import at.ac.tuwien.sepm.assignment.individual.service.Validator;
@@ -30,7 +31,7 @@ public class HorseServiceImpl implements HorseService {
         try {
             return dao.getAll();
         } catch (DataAccessException e) {
-            throw new NotFoundException(e);
+            throw new PersistenceDataException(e.getMessage());
         }
     }
 
@@ -39,11 +40,11 @@ public class HorseServiceImpl implements HorseService {
         log.trace("getHorseById()", id);
         try {
             return dao.getHorseById(id);
-        } catch (NotFoundException e) {
-            e.printStackTrace(); //TODO
+        } catch (DataAccessException e) {
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
-
-        return null;
     }
 
     @Override
@@ -53,8 +54,8 @@ public class HorseServiceImpl implements HorseService {
         log.debug("horse fields are valid");
         try {
             dao.createHorse(horseDto);
-        } catch (Exception e) {
-            e.printStackTrace(); //TODO
+        } catch (DataAccessException e) {
+            throw new PersistenceDataException(e.getMessage());
         }
 
     }
@@ -66,8 +67,10 @@ public class HorseServiceImpl implements HorseService {
         log.debug("horse fields are valid");
         try {
             dao.updateHorse(horseDto);
-        } catch (Exception e) {
-            e.printStackTrace(); //TODO
+        } catch (DataAccessException e) {
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -76,8 +79,10 @@ public class HorseServiceImpl implements HorseService {
         log.trace("deleteHorse", id);
         try {
             dao.deleteHorse(id);
-        } catch (Exception e) {
-            e.printStackTrace(); //TODo
+        } catch (DataAccessException e) {
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -89,7 +94,9 @@ public class HorseServiceImpl implements HorseService {
         try {
             return dao.getFemaleHorse(searchText);
         } catch (DataAccessException e) {
-            throw new NotFoundException(e);
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -101,7 +108,9 @@ public class HorseServiceImpl implements HorseService {
         try {
             return dao.getMaleHorse(searchText);
         } catch (DataAccessException e) {
-            throw new NotFoundException(e);
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -117,7 +126,9 @@ public class HorseServiceImpl implements HorseService {
         try {
             return dao.searchHorse(horseDto);
         } catch (DataAccessException e){
-            throw new NotFoundException(e);
+            throw new PersistenceDataException(e.getMessage());
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 }

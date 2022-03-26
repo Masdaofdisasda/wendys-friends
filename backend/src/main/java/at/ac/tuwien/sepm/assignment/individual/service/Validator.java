@@ -37,7 +37,7 @@ public class Validator {
         if (horseDto.mom()!=null ){
             Horse mom;
             try {
-                mom = horseDao.getOneById(horseDto.mom());
+                mom = horseDao.getHorseById(horseDto.mom());
             } catch (DataAccessException e){
                 throw new ValidationException("mother doesn't exist");
             }
@@ -47,7 +47,7 @@ public class Validator {
         if (horseDto.dad()!=null ){
             Horse dad;
             try {
-                dad = horseDao.getOneById(horseDto.dad());
+                dad = horseDao.getHorseById(horseDto.dad());
             } catch (DataAccessException e){
                 throw new ValidationException("mother or father doesn't exist");
             }
@@ -57,7 +57,7 @@ public class Validator {
     }
 
     public void validateSearchText(String searchText){
-        if (searchText.isEmpty() || searchText.isEmpty())
+        if (searchText.isEmpty())
             throw new ValidationException("search text is empty");
     }
 

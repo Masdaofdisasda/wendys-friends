@@ -21,44 +21,78 @@ export class HorseService {
   ) { }
 
   /**
-   * Get all horses stored in the system
-   *
+   * @brief Get all horses stored in the system
    * @return observable list of found horses.
    */
   getAll(): Observable<Horse[]> {
     return this.http.get<Horse[]>(baseUri);
   }
 
-  /** POST: add a new hero to the server */
+  /**
+   * @brief creates and inserts a new horse
+   * @param horse that should be created
+   * @return observable added horse.
+   */
   addHorse(horse: Horse): Observable<Horse> {
     return this.http.post<Horse>(baseUri, horse, this.httpOptions).pipe(
       catchError(this.handleError<Horse>('addHero'))
     );
   }
 
+  /**
+   * @brief changes information about an existing horse
+   * @param horse with new information
+   * @return observable updated horse.
+   */
   updateHorses(horse: Horse): Observable<Horse> {
     return this.http.put<Horse>(baseUri, horse, this.httpOptions).pipe(
       catchError(this.handleError<Horse>('addHero'))
     );
   }
 
+  /**
+   * @brief find a horse by its id
+   * @param id of the specified horse
+   * @return observable list with single horse.
+   */
   getHorse(id: number): Observable<Horse> {
     return this.http.get<Horse>(baseUri + '/' + id);
   }
 
+  /**
+   * @brief deletes a horse from the system
+   * @param id of the horse to delete
+   * @return observable deleted horse.
+   */
   deleteHorse(id: number): Observable<Horse>{
     return this.http.delete<Horse>(baseUri + '/' + id, this.httpOptions).pipe(
       catchError(this.handleError<Horse>('deleteHorse'))
     );
   }
 
+  /**
+   * @brief searches for female horses matching the searchText
+   * @param searchText part of a horse name
+   * @return observable list of found horses.
+   */
   horseLookupMom(searchText: string): Observable<Horse[]>{
     return this.http.get<Horse[]>(baseUri + '/' + 'f' + '/' + searchText);
   }
+
+  /**
+   * @brief searches for male horses matching the searchText
+   * @param searchText part of a horse name
+   * @return observable list of found horses.
+   */
   horseLookupDad(searchText: string): Observable<Horse[]>{
     return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText);
   }
 
+  /**
+   * @brief searches for horses matching the parameters
+   * @param horse parameters to match
+   * @return observable list of found horses.
+   */
   searchHorse(horse: Horse): Observable<Horse[]>{
     let uri = baseUri + '/search?';
     let addAnd = false;
