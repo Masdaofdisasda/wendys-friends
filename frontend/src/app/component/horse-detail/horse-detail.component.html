@@ -10,8 +10,8 @@
   <div>mother: <a [routerLink]="['/horse', mom.id]" >{{mom?.name}}</a></div>
   <div>father: <a [routerLink]="['/horse', dad.id]" >{{dad?.name}}</a></div>
 
-  <button><a [class.selected]="horse === selectedHorseEdit" type="button" (click)="onSelectEdit(horse)">edit</a></button>
-  <button><a [class.selected]="horse === selectedHorseDelete" type="button" (click)="onSelectDelete(horse)"> delete</a></button>
+  <button class="btn btn-light"><a [class.selected]="horse === selectedHorseEdit" (click)="onSelectEdit(horse)">edit</a></button>
+  <button class="btn btn-light" ><a [class.selected]="horse === selectedHorseDelete" (click)="onSelectDelete(horse)"> delete</a></button>
 
   <app-horse-update [horse]="selectedHorseEdit"></app-horse-update>
 

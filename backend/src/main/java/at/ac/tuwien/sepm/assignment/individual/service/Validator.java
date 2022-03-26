@@ -83,11 +83,10 @@ public class Validator {
         if (ownerDto.givenname() == null || ownerDto.surname() == null || ownerDto.givenname() == "" || ownerDto.surname() == "" ){
             throw new ValidationException("Name can't be empty");
         }
-        if (ownerDto.email() != null || ownerDto.email() != ""|| !ownerDto.email().isEmpty()| !ownerDto.email().isBlank()){
+        if (!ownerDto.email().isBlank()){
             String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
             if (!ownerDto.email().matches(regex)){
-                //throw new ValidationException("Email address is not valid");
-                //TODO
+                throw new ValidationException("Email address is not valid");
             }
         }
     }

@@ -38,7 +38,6 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public void save(OwnerDto ownerDto){
         log.trace("save()");
-        log.debug("owners email is: -"+ownerDto.email()+"-");
         validator.validateSaveOwner(ownerDto);
         log.debug("owner fields are valid");
         try {
