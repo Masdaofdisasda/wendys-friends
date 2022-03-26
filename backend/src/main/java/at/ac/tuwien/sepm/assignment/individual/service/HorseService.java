@@ -5,7 +5,6 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceDataException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
-import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
