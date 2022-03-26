@@ -43,7 +43,6 @@ export class HorseComponent implements OnInit {
   }
 
 
-
   public vanishError(): void {
     this.error = null;
   }

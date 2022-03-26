@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Horse} from '../../dto/horse';
 import {HorseService} from '../../service/horse.service';
 import {Observable} from 'rxjs';
@@ -12,6 +12,7 @@ import {OwnerService} from '../../service/owner.service';
   styleUrls: ['./horse-update.component.scss']
 })
 export class HorseUpdateComponent implements OnInit {
+  @Output() reload = new EventEmitter();
   @Input() horse: Horse;
   horses: Horse[];
   success = false;
@@ -37,7 +38,9 @@ export class HorseUpdateComponent implements OnInit {
 
   update(id: number, name: string, description: string, birthdate: Date, gender: string, owner: number, mom: number, dad: number): void {
     this.service.updateHorses({id, name, description, birthdate, gender, owner, mom, dad} as Horse)
-      .subscribe(horse => {this.horses.push(horse);});
+      .subscribe(horse => {this.horses.push(horse);
+        this.reload.emit();
+      });
     this.horse=null;
     this.success = true;
     this.selectedMom=null;

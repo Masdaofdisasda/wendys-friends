@@ -7,14 +7,14 @@
   <div>born: {{horse?.birthdate}}</div>
   <div>gender: {{horse?.gender}}</div>
   <div>owner: {{owner?.givenname}} {{owner?.surname}}</div>
-  <div>mother: <a [routerLink]="['/horse', mom.id]" >{{mom?.name}}</a></div>
-  <div>father: <a [routerLink]="['/horse', dad.id]" >{{dad?.name}}</a></div>
+  <div>mother: <a [routerLink]="['/horse', mom?.id]" >{{mom?.name}}</a></div>
+  <div>father: <a [routerLink]="['/horse', dad?.id]" >{{dad?.name}}</a></div>
 
   <button class="btn btn-light"><a [class.selected]="horse === selectedHorseEdit" (click)="onSelectEdit(horse)">edit</a></button>
   <button class="btn btn-light" ><a [class.selected]="horse === selectedHorseDelete" (click)="onSelectDelete(horse)"> delete</a></button>
 
-  <app-horse-update [horse]="selectedHorseEdit"></app-horse-update>
+  <app-horse-update (reload)="getHorse()"  [horse]="selectedHorseEdit"></app-horse-update>
 
-  <app-horse-delete [horse]="selectedHorseDelete"></app-horse-delete>
+  <app-horse-delete (reload)="getHorse()" [horse]="selectedHorseDelete"></app-horse-delete>
 
 </div>

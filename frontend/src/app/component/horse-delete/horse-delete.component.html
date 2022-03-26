@@ -1,10 +1,10 @@
 <div *ngIf="horse">
   <div>are your sure you want to delete the horse: {{horse.name}}?</div>
 
-  <button type="button" class="btn btn-dark" (click)="deleteHorse(horse.id)">
+  <button type="button" class="btn btn-dark" (click)="reload.emit()" (click)="deleteHorse(horse.id)">
     Delete horse
   </button>
-  <button type="button" class="btn btn-light" (click)="horse=null">
+  <button type="button" class="btn btn-light" (click)="reload.emit()" (click)="horse=null">
     Cancel
   </button>
 </div>

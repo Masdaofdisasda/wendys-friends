@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 import {Owner} from '../dto/owner';
+import {catchError} from 'rxjs/operators';
 
 
 const baseUri = environment.backendUrl + '/owners';
@@ -25,7 +26,12 @@ export class OwnerService {
    * @return observable list of found owners.
    */
   getAll(): Observable<Owner[]> {
-    return this.http.get<Owner[]>(baseUri);
+    return this.http.get<Owner[]>(baseUri).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -34,7 +40,12 @@ export class OwnerService {
    * @return observable added owner.
    */
   addOwner(owner: Owner): Observable<Owner> {
-    return this.http.post<Owner>(baseUri, owner, this.httpOptions);
+    return this.http.post<Owner>(baseUri, owner, this.httpOptions).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -43,7 +54,12 @@ export class OwnerService {
    * @return observable list of found owners.
    */
   ownerLookup(searchText: string): Observable<Owner[]>{
-    return this.http.get<Owner[]>(baseUri + '/' + 'lookup' + '/' + searchText);
+    return this.http.get<Owner[]>(baseUri + '/' + 'lookup' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -52,6 +68,11 @@ export class OwnerService {
    * @return observable list with single owner.
    */
   getOwner(id: number): Observable<Owner>{
-    return this.http.get<Owner>(baseUri + '/' + id);
+    return this.http.get<Owner>(baseUri + '/' + id).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 }

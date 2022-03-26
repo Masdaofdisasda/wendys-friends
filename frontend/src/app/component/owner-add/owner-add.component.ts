@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Owner} from '../../dto/owner';
 import {OwnerService} from '../../service/owner.service';
 
@@ -8,6 +8,7 @@ import {OwnerService} from '../../service/owner.service';
   styleUrls: ['./owner-add.component.scss']
 })
 export class OwnerAddComponent implements OnInit {
+  @Output() reload = new EventEmitter();
   active = false;
   owners: Owner[];
 
@@ -20,7 +21,8 @@ export class OwnerAddComponent implements OnInit {
 
   add(givenname: string, surname: string, email: string): void {
     this.service.addOwner({givenname, surname, email} as Owner)
-      .subscribe(horse => {this.owners.push(horse);});
+      .subscribe(horse => {this.owners.push(horse);
+        this.reload.emit();});
     this.active=false;
   }
 }

@@ -68,21 +68,14 @@ export class HorseSearchComponent implements OnInit {
     return name;
   }
 
-  /**
-   * Used to format the result data from the lookup into the
-   * display and list values. Maps `{name: "band", id:"id" }` into a string
-   */
   resultFormatOwnerValue(value: any) {
     return value.givenname +' '+ value.surname;
   }
 
-  /**
-   * Initially binds the string value and then after selecting
-   * an item by checking either for string or key/value object.
-   */
   inputFormatOwner(value: any)   {
     if(value.surname)
     { return value.givenname +' '+ value.surname;}
     return value;
   }
+
 }

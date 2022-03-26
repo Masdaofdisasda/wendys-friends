@@ -1,6 +1,6 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import {Horse} from '../dto/horse';
@@ -25,7 +25,12 @@ export class HorseService {
    * @return observable list of found horses.
    */
   getAll(): Observable<Horse[]> {
-    return this.http.get<Horse[]>(baseUri);
+    return this.http.get<Horse[]>(baseUri).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(() => error);
+    }));
   }
 
   /**
@@ -34,9 +39,12 @@ export class HorseService {
    * @return observable added horse.
    */
   addHorse(horse: Horse): Observable<Horse> {
-    return this.http.post<Horse>(baseUri, horse, this.httpOptions).pipe(
-      catchError(this.handleError<Horse>('addHero'))
-    );
+    return this.http.post<Horse>(baseUri, horse, this.httpOptions).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -45,9 +53,12 @@ export class HorseService {
    * @return observable updated horse.
    */
   updateHorses(horse: Horse): Observable<Horse> {
-    return this.http.put<Horse>(baseUri, horse, this.httpOptions).pipe(
-      catchError(this.handleError<Horse>('addHero'))
-    );
+    return this.http.put<Horse>(baseUri, horse, this.httpOptions).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -56,7 +67,12 @@ export class HorseService {
    * @return observable list with single horse.
    */
   getHorse(id: number): Observable<Horse> {
-    return this.http.get<Horse>(baseUri + '/' + id);
+    return this.http.get<Horse>(baseUri + '/' + id).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -65,9 +81,12 @@ export class HorseService {
    * @return observable deleted horse.
    */
   deleteHorse(id: number): Observable<Horse>{
-    return this.http.delete<Horse>(baseUri + '/' + id, this.httpOptions).pipe(
-      catchError(this.handleError<Horse>('deleteHorse'))
-    );
+    return this.http.delete<Horse>(baseUri + '/' + id, this.httpOptions).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -76,7 +95,12 @@ export class HorseService {
    * @return observable list of found horses.
    */
   horseLookupMom(searchText: string): Observable<Horse[]>{
-    return this.http.get<Horse[]>(baseUri + '/' + 'f' + '/' + searchText);
+    return this.http.get<Horse[]>(baseUri + '/' + 'f' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -85,7 +109,12 @@ export class HorseService {
    * @return observable list of found horses.
    */
   horseLookupDad(searchText: string): Observable<Horse[]>{
-    return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText);
+    return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 
   /**
@@ -122,27 +151,11 @@ export class HorseService {
       uri=uri+'owner='+horse.owner.toString();
     }
 
-    return this.http.get<Horse[]>(uri);
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   *
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      //this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+    return this.http.get<Horse[]>(uri).pipe(catchError((error: HttpErrorResponse) => {
+      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.error(errMsg);
+      alert(errMsg);
+      return throwError(()=>error);
+    }));
   }
 }
