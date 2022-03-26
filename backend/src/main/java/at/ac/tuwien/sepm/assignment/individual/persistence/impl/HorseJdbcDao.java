@@ -113,14 +113,29 @@ public class HorseJdbcDao implements HorseDao {
         log.trace("deleteHorse()",id);
         final String sql = "DELETE FROM " + TABLE_NAME +
                 " WHERE id=?";
-        int i = jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+        int i = jdbcTemplate.update(con -> {
+            PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setLong(1, id);
             log.debug(stmt.toString());
             return stmt;
         });
         if (i == 0) throw new NotFoundException("horse does not exist");
         log.debug("horse was deleted");
+        final String sql2 = "UPDATE " + TABLE_NAME + " SET MOM=NULL WHERE MOM=?;";
+        final String sql3 = "UPDATE " + TABLE_NAME + " SET DAD=NULL WHERE DAD=?;";
+        jdbcTemplate.update(con-> {
+            PreparedStatement stmt = con.prepareStatement(sql2);
+            stmt.setLong(1,id);
+            log.debug(stmt.toString());
+            return stmt;
+        });
+        jdbcTemplate.update(con-> {
+            PreparedStatement stmt = con.prepareStatement(sql3);
+            stmt.setLong(1,id);
+            log.debug(stmt.toString());
+            return stmt;
+        });
+        log.debug("parent horse was removed from children");
     }
 
     @Override
