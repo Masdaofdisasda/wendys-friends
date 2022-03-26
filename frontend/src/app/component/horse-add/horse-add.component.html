@@ -1,67 +1,72 @@
 <div *ngIf="active">
-  <div>
-    <label for="new-horse-name">name: </label>
-    <input id="new-horse-name" #horseName placeholder="required"/>
+  <form #form="ngForm" (ngSubmit)=
+    "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, selectedOwner?.id, selectedMom?.id, selectedDad?.id); horseName.value=''">
 
-    <label for="new-horse-desc">description: </label>
-    <input id="new-horse-desc" #horseDesc placeholder="optional"/>
+      <div class="form-group mb-2">
+        <label for="new-horse-name" class="form-label" >Name: </label>
+        <input id="new-horse-name" class="form-control" type="text" #horseName placeholder="Enter Name (required)"/>
+      </div>
 
-    <label for="new-horse-date">birhtdate: </label>
-    <input type="date" id="new-horse-date" #horseDate placeholder="required"/>
+      <div class="form-group mb-2">
+        <label for="new-horse-desc" class="form-label">Description: </label>
+        <input id="new-horse-desc" class="form-control" type="text" #horseDesc placeholder="Enter Description (optional)"/>
+      </div>
 
-    <label for="new-horse-gender">gender: </label>
-    <select name="demo" #horseSex>
-      <option selected="selected" id="new-horse-gender" value="m">male</option>
-      <option value="f">female</option>
-    </select>
+      <div class="form-group">
+        <label for="new-horse-date" class="form-label">Date of birth: </label>
+        <input type="date" class="form-control" id="new-horse-date" #horseDate/>
+      </div>
 
-    <label for="new-horse-owner">owner: </label>
-    <input id="new-horse-owner" type="text"
-           name="horseOwner"
-           class="form-control"
-           [(ngModel)]="selectedOwner"
-           [ngbTypeahead]="searchOwner"
-           [resultFormatter]="resultFormatOwnerValue"
-           [inputFormatter]="inputFormatOwner"
-           #instance="ngbTypeahead"
-           placeholder="optional"
-    />
+      <div class="form-group">
+        <label for="new-horse-gender" class="form-label">Gender: </label>
+        <select name="gender" #horseSex class="form-select">
+          <option selected="selected" id="new-horse-gender" value="m">male</option>
+          <option value="f">female</option>
+        </select>
+      </div>
 
-    <label for="new-horse-mom">mother: </label>
-    <input id="new-horse-mom" type="text"
-           name="horseMom"
-           class="form-control"
-           [(ngModel)]="selectedMom"
-           [ngbTypeahead]="searchMom"
-           [resultFormatter]="resultFormatHorseValue"
-           [inputFormatter]="inputFormatHorse"
-           #instance="ngbTypeahead"
-           placeholder="optional"
-    />
+      <div class="form-group mb-2">
+        <label for="new-horse-owner" class="form-label">Owner: </label>
+        <input id="new-horse-owner" type="text"
+               name="horseOwner"
+               class="form-control"
+               [(ngModel)]="selectedOwner"
+               [ngbTypeahead]="searchOwner"
+               [resultFormatter]="resultFormatOwnerValue"
+               [inputFormatter]="inputFormatOwner"
+               #instance="ngbTypeahead"
+               placeholder="Select Owner (optional)"
+        />
+        <label for="new-horse-mom" class="form-label">Mother: </label>
+        <input id="new-horse-mom" type="text"
+               name="horseMom"
+               class="form-control"
+               [(ngModel)]="selectedMom"
+               [ngbTypeahead]="searchMom"
+               [resultFormatter]="resultFormatHorseValue"
+               [inputFormatter]="inputFormatHorse"
+               #instance="ngbTypeahead"
+               placeholder="Select Mother (optional)"
+        />
+      </div>
 
-    <label for="new-horse-dad">father: </label>
-    <input id="new-horse-dad" type="text"
-           name="horseDad"
-           class="form-control"
-           [(ngModel)]="selectedDad"
-           [ngbTypeahead]="searchDad"
-           [resultFormatter]="resultFormatHorseValue"
-           [inputFormatter]="inputFormatHorse"
-           #instance="ngbTypeahead"
-           placeholder="optional"
-    />
+      <div class="form-group mb-2">
+        <label for="new-horse-dad" class="form-label">Father: </label>
+        <input id="new-horse-dad" type="text"
+               name="horseDad"
+               class="form-control"
+               [(ngModel)]="selectedDad"
+               [ngbTypeahead]="searchDad"
+               [resultFormatter]="resultFormatHorseValue"
+               [inputFormatter]="inputFormatHorse"
+               #instance="ngbTypeahead"
+               placeholder="Select Father (optional)"
+        />
+      </div>
 
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button type="button" class="btn btn-dark mr-1" (click)=
-      "add(horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, selectedOwner.id, selectedMom.id, selectedDad.id); horseName.value=''">
-      add horse
-    </button>
-    <button type="button" class="btn btn-light mr-1" (click)="active=false">
-      cancel
-    </button>
-  </div>
+      <button class="btn btn-dark" type="submit">Add horse</button>
+      <button type="button" class="btn btn-light" (click)="active=false">Cancel</button>
+  </form>
 </div>
 
-<div *ngIf="!active"><button type="button" class="btn btn-light mr-1" (click)="active = true">
-  add new horse
-</button></div>
+<div *ngIf="!active"><button type="button" class="btn btn-light" (click)="active = true">Add horse</button></div>

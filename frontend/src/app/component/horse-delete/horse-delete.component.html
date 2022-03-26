@@ -1,16 +1,14 @@
 <div *ngIf="horse">
   <div>are your sure you want to delete the horse: {{horse.name}}?</div>
 
-  <button type="button" class="add-button" (click)="deleteHorse(horse.id)">
-    delete horse
+  <button type="button" class="btn btn-dark" (click)="deleteHorse(horse.id)">
+    Delete horse
   </button>
-  <button type="button" class="add-button" (click)="horse=null">
-    cancel
+  <button type="button" class="btn btn-light" (click)="horse=null">
+    Cancel
   </button>
 </div>
 <div *ngIf="success">
   horse was successfully deleted
-  <button type="button" class="add-button" (click)="success=false">
-    ok
-  </button>
+  <button type="button" class="btn btn-light" (click)="success=false">OK</button>
 </div>

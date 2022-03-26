@@ -2,72 +2,80 @@
 
   <h2>edit {{horse.name}}</h2>
 
-  <div>
-    <label for="new-horse-name">name: </label>
-    <input id="new-horse-name" #horseName placeholder="{{horse.name}}"/>
+  <form #form="ngForm" (ngSubmit)=
+    "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, selectedOwner?.id, selectedMom?.id, selectedDad?.id); horseName.value=''">
 
-    <label for="new-horse-desc">description: </label>
-    <input id="new-horse-desc" #horseDesc placeholder="{{horse.description}}" />
+      <div class="form-group mb-2">
+        <label for="new-horse-name" class="form-label">Name: </label>
+        <input id="new-horse-name" class="form-control" #horseName placeholder="{{horse.name}}"/>
+      </div>
 
-    <label for="new-horse-date">birhtdate: </label>
-    <input type="date" id="new-horse-date" #horseDate placeholder="{{horse.birthdate}}"/>
+      <div class="form-group mb-2">
+        <label for="new-horse-desc" class="form-label">Description: </label>
+        <input id="new-horse-desc" class="form-control" #horseDesc placeholder="{{horse.description}}" />
+      </div>
 
-    <label for="new-horse-gender">gender: </label>
-    <select name="demo" #horseSex>
-      <option selected="selected" id="new-horse-gender" value="m">male</option>
-      <option value="f">female</option>
-    </select>
+      <div class="form-group mb-2">
+        <label for="new-horse-date" class="form-label">Date of birth: </label>
+        <input type="date" class="form-control" id="new-horse-date" #horseDate placeholder="{{horse.birthdate}}"/>
+      </div>
 
-    <label for="new-horse-owner">owner: </label>
-    <input id="new-horse-owner" type="text"
-           name="horseOwner"
-           class="form-control"
-           [(ngModel)]="selectedOwner"
-           [ngbTypeahead]="searchOwner"
-           [resultFormatter]="resultFormatOwnerValue"
-           [inputFormatter]="inputFormatOwner"
-           #instance="ngbTypeahead"
-           placeholder="(leave blank to delete owner)"
-    />
-    <label for="new-horse-mom">mother: </label>
-    <input id="new-horse-mom" type="text"
-           name="horseMom"
-           class="form-control"
-           [(ngModel)]="selectedMom"
-           [ngbTypeahead]="searchMom"
-           [resultFormatter]="resultFormatHorseValue"
-           [inputFormatter]="inputFormatHorse"
-           #instance="ngbTypeahead"
-           placeholder="{{mom?.name}} (leave blank to delete mother)"
-    />
+      <div class="form-group mb-2">
+        <label for="new-horse-gender" class="form-label">Gender: </label>
+        <select name="demo" #horseSex class="form-select">
+          <option selected="selected" id="new-horse-gender" value="m">male</option>
+          <option value="f">female</option>
+        </select>
+      </div>
 
-    <label for="new-horse-dad">father: </label>
-    <input id="new-horse-dad" type="text"
-           name="horseDad"
-           class="form-control"
-           [(ngModel)]="selectedDad"
-           [ngbTypeahead]="searchDad"
-           [resultFormatter]="resultFormatHorseValue"
-           [inputFormatter]="inputFormatHorse"
-           #instance="ngbTypeahead"
-           placeholder="{{dad?.name}} (leave blank to delete father)"
-    />
+      <div class="form-group mb-2">
+        <label for="new-horse-owner" class="form-label">Owner: </label>
+        <input id="new-horse-owner" type="text"
+               name="horseOwner"
+               class="form-control"
+               [(ngModel)]="selectedOwner"
+               [ngbTypeahead]="searchOwner"
+               [resultFormatter]="resultFormatOwnerValue"
+               [inputFormatter]="inputFormatOwner"
+               #instance="ngbTypeahead"
+               placeholder="leave blank to delete owner"
+        />
+      </div>
 
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button type="button" class="add-button" (click)=
-      "update(horse.id,horseName.value, horseDesc.value, horseDate.valueAsDate, horseSex.value, selectedOwner.id, selectedMom.id, selectedDad.id); horseName.value=''">
-      save changes
-    </button>
-    <button type="button" class="add-button" (click)="horse=null">
-      cancel
-    </button>
-  </div>
+      <div class="form-group mb-2">
+        <label for="new-horse-mom" class="form-label">Mother: </label>
+        <input id="new-horse-mom" type="text"
+               name="horseMom"
+               class="form-control"
+               [(ngModel)]="selectedMom"
+               [ngbTypeahead]="searchMom"
+               [resultFormatter]="resultFormatHorseValue"
+               [inputFormatter]="inputFormatHorse"
+               #instance="ngbTypeahead"
+               placeholder="{{mom?.name}} leave blank to delete mother"
+        />
 
+        <label for="new-horse-dad" class="form-label">Father: </label>
+        <input id="new-horse-dad" type="text"
+               name="horseDad"
+               class="form-control"
+               [(ngModel)]="selectedDad"
+               [ngbTypeahead]="searchDad"
+               [resultFormatter]="resultFormatHorseValue"
+               [inputFormatter]="inputFormatHorse"
+               #instance="ngbTypeahead"
+               placeholder="{{dad?.name}} leave blank to delete father"
+        />
+      </div>
+
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button class="btn btn-dark" type="submit">Save changes</button>
+      <button type="button" class="btn btn-light" (click)="horse=null">Cancel</button>
+
+  </form>
 </div>
 
 <div *ngIf="success">
   horse was successfully updated
-  <button type="button" class="add-button" (click)="success=false">
-    ok
-  </button>
+  <button type="button" class="btn btn-light" (click)="success=false">OK</button>
 </div>
