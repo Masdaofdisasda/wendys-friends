@@ -133,7 +133,7 @@ public class HorseEndpoint {
     private ResponseStatusException handleException(Exception e, String message) {
         log.error(message,e);
         if(e instanceof ValidationException){
-            return new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            return new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
         }else if(e instanceof NotFoundException){
             return  new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }else{

@@ -30,7 +30,7 @@ public class Validator {
     }
 
     private void validateFields(HorseDto horseDto) {
-        if (horseDto.name().trim().isEmpty() | horseDto.birthdate().isAfter(java.time.LocalDate.now()))
+        if (horseDto.name().trim().isEmpty() | horseDto.birthdate() == null | horseDto.birthdate().isAfter(java.time.LocalDate.now()))
             throw new ValidationException("Empty name or impossible birthdate");
         if (horseDto.mom()!=null ){
             Horse mom;

@@ -3,7 +3,6 @@ package at.ac.tuwien.sepm.assignment.individual.rest;
 
 import at.ac.tuwien.sepm.assignment.individual.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceDataException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.mapper.OwnerMapper;
 import at.ac.tuwien.sepm.assignment.individual.service.OwnerService;
@@ -72,11 +71,9 @@ public class OwnerEndpoint {
     private ResponseStatusException handleException(Exception e, String message) {
         log.error(message,e);
         if(e instanceof ValidationException){
-            return new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            return new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
         }else if(e instanceof NotFoundException){
             return  new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }else if(e instanceof PersistenceDataException){
-            return new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
         }else{
             return new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
         }

@@ -54,12 +54,13 @@ export class OwnerService {
    * @return observable list of found owners.
    */
   ownerLookup(searchText: string): Observable<Owner[]>{
-    return this.http.get<Owner[]>(baseUri + '/' + 'lookup' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
-      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      console.error(errMsg);
-      alert(errMsg);
-      return throwError(()=>error);
-    }));
+    if (searchText.length>0) {
+      return this.http.get<Owner[]>(baseUri + '/' + 'lookup' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
+        const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        console.error(errMsg);
+        return throwError(() => error);
+      }));
+    }
   }
 
   /**

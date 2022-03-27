@@ -28,7 +28,7 @@
           <td>{{horse.name}}</td>
           <td>{{horse.birthdate}}</td>
           <td>{{horse.gender}}</td>
-        <td><a [routerLink]="['/horse', horse.id]" >view</a></td>
+        <td><a [routerLink]="['/horses', horse.id]" >view</a></td>
         <td><a [class.selected]="horse === selectedHorseEdit" type="button" (click)="onSelectEdit(horse)"> edit</a></td>
         <td><a [class.selected]="horse === selectedHorseDelete" type="button" (click)="onSelectDelete(horse)"> delete</a></td>
       </tr>

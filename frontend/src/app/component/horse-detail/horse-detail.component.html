@@ -7,8 +7,8 @@
   <div>born: {{horse?.birthdate}}</div>
   <div>gender: {{horse?.gender}}</div>
   <div>owner: {{owner?.givenname}} {{owner?.surname}}</div>
-  <div>mother: <a [routerLink]="['/horse', mom?.id]" >{{mom?.name}}</a></div>
-  <div>father: <a [routerLink]="['/horse', dad?.id]" >{{dad?.name}}</a></div>
+  <div>mother: <a [routerLink]="['/horses', mom?.id]" >{{mom?.name}}</a></div>
+  <div>father: <a [routerLink]="['/horses', dad?.id]" >{{dad?.name}}</a></div>
 
   <button class="btn btn-light"><a [class.selected]="horse === selectedHorseEdit" (click)="onSelectEdit(horse)">edit</a></button>
   <button class="btn btn-light" ><a [class.selected]="horse === selectedHorseDelete" (click)="onSelectDelete(horse)"> delete</a></button>

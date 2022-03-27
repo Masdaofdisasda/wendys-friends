@@ -43,7 +43,7 @@ export class HorseService {
       const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
       console.error(errMsg);
       alert(errMsg);
-      return throwError(()=>error);
+      return throwError(() => error);
     }));
   }
 
@@ -95,12 +95,13 @@ export class HorseService {
    * @return observable list of found horses.
    */
   horseLookupMom(searchText: string): Observable<Horse[]>{
-    return this.http.get<Horse[]>(baseUri + '/' + 'f' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
-      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      console.error(errMsg);
-      alert(errMsg);
-      return throwError(()=>error);
-    }));
+    if (searchText.length>0) {
+      return this.http.get<Horse[]>(baseUri + '/' + 'f' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
+        const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        console.error(errMsg);
+        return throwError(() => error);
+      }));
+    }
   }
 
   /**
@@ -109,12 +110,13 @@ export class HorseService {
    * @return observable list of found horses.
    */
   horseLookupDad(searchText: string): Observable<Horse[]>{
-    return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
-      const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      console.error(errMsg);
-      alert(errMsg);
-      return throwError(()=>error);
-    }));
+    if (searchText.length>0){
+      return this.http.get<Horse[]>(baseUri + '/' + 'm' + '/' + searchText).pipe(catchError((error: HttpErrorResponse) => {
+        const errMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        console.error(errMsg);
+        return throwError(()=>error);
+      }));
+    }
   }
 
   /**
