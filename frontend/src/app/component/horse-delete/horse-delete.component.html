@@ -1,14 +1,10 @@
 <div *ngIf="horse">
   <div>are your sure you want to delete the horse: {{horse.name}}?</div>
 
-  <button type="button" class="btn btn-dark" (click)="reload.emit()" (click)="deleteHorse(horse.id)">
+  <button type="button" class="btn btn-dark"  (click)="deleteHorse(horse.id)" routerLink="/horses">
     Delete horse
   </button>
   <button type="button" class="btn btn-light" (click)="reload.emit()" (click)="horse=null">
     Cancel
   </button>
-</div>
-<div *ngIf="success">
-  delete request was sent to the server
-  <button type="button" class="btn btn-light" (click)="success=false">OK</button>
 </div>
